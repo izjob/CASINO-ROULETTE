@@ -1,4 +1,4 @@
-var wallet = 1000;
+var wallet = 7000;
 var currentInput = 0;
 
 var greenBet = 0;
@@ -60,7 +60,7 @@ function SpinRoulette() {
             $(".BottomButtons, .BetColorBtn").prop("disabled", false);
 
             if (greenBet > 0 && ResultColor == "Green") {
-                wallet = wallet + greenBet * 36 - redBet - blackBet;
+                wallet = wallet + greenBet * 37 - redBet - blackBet;
             } else if (redBet > 0 && ResultColor == "Red") {
                 wallet = wallet + redBet - greenBet - blackBet;
             } else if (blackBet > 0 && ResultColor == "Black") {
@@ -86,6 +86,21 @@ function SpinRoulette() {
             redBet = greenBet = blackBet = 0;
 
         }, 5000);
+        if($("#Historial").children().length==10){
+            $('#Historial').children().last().addClass('.exit-right')
+            $('#Historial').children().last().remove();
+        }
+        
+        numeroHistorial = $('<span></span>')
+        numeroHistorial.text(RanNum)
+        numeroHistorial.addClass('NumeroHistorial','.enter-left')
+        numeroHistorial.css({
+            'background-color': ResultColor
+        })
+
+        $("#Historial").prepend(numeroHistorial)
+        console.log("hola", numeroHistorial)
+
     }
 }
 

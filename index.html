@@ -30,28 +30,31 @@
                 <div id="RollerContainer">
                 </div>
             </div>
-            <div class="historial">
-                
+            <div id="Historial">
+            
             </div>
             <div class="RouletteInput">
                 <input class="BetInput form-control mt-4" onkeyup="BetInput('input')" placeholder="$$$">
             </div>
             <div class="BetColor">
                 <div class="BetRed">
-                    <button class="BetColorBtn BetColorBtnRed btn" data-color="Red">Red</button>
+                    <button class="BetColorBtn BetColorBtnRed btn" data-color="Red">Red (x2)</button>
                     <span class="ColorBet RedBet py-2">0</span>
                 </div>
                 <div class="BetGreen">
-                    <button class="BetColorBtn BetColorBtnGreen btn" data-color="Green">Green</button>
+                    <button class="BetColorBtn BetColorBtnGreen btn" data-color="Green">Green (x12)</button>
                     <span class="ColorBet GreenBet py-2">0</span>
                 </div>
                 <div class="BetBlack">
-                    <button class="BetColorBtn BetColorBtnBlack btn" data-color="Black">Black</button>
+                    <button class="BetColorBtn BetColorBtnBlack btn" data-color="Black">Black (x2)</button>
                     <span class="ColorBet BlackBet py-2">0</span>
                 </div>
             </div>
             <div class="BottomButton">
-                <button class="btn" onclick="SpinRoulette()">SPIN!</button>
+                <button class="btn" onclick="SpinRoulette()">
+                    <iconify-icon icon="ph:poker-chip-bold"></iconify-icon>
+                    &#160 SPIN! &#160
+                    <iconify-icon icon="ph:poker-chip-bold"></iconify-icon></button>
             </div>
 
 
