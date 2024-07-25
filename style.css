@@ -3,7 +3,7 @@
 
     display: grid;
     grid:
-        "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 10% 80% 10%;
+        "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 23% 54% 23%;
     gap: 8px;
 }
 
@@ -23,7 +23,11 @@
     overflow: hidden;
     height: 100%;
     background-image: url(https://us.123rf.com/450wm/salamatik/salamatik1803/salamatik180300012/97519237-textura-verde-fondo-de-fieltro-para-mesa-de-p%C3%B3ker-y-casino.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
+
 /*
 -------------------------------------------------------------------------RULETA
 */
@@ -31,9 +35,11 @@
     display: block;
     width: 100%;
     text-align: center;
-    margin: auto;
+    margin: 10px 0px 40px 0px;
+    color: yellow;
     text-shadow: 0 0 30px yellow;
-    
+    font-size: 200%;
+
 }
 
 .RoulleteContainter {
@@ -45,17 +51,8 @@
     border: solid yellow 4px;
     box-shadow: 0 0 30px yellow;
 }
-@media (max-width: 1150px) {
-    .RoulleteContainter {
-        width: 320px;
-    }
-    .Red,
-    .Black,
-    .Green {
-        transform: translateX(-240px);
-    }
 
-}
+
 
 
 .MidIndicator {
@@ -66,7 +63,6 @@
     height: 100%;
     z-index: 100;
     border-right: solid yellow 2px;
-    box-shadow: 0 0 30px yellow;
 }
 
 #RollerContainer {
@@ -74,12 +70,13 @@
     animation-name: Spin;
     animation-duration: 4s;
     animation-fill-mode: forwards;
-    
+
 }
 
 .Red {
-    background-color: 
-    red;
+    background-color: red;
+
+
 }
 
 .Black {
@@ -108,49 +105,47 @@
     text-align: center;
     margin: 10px 10px 0px 10px;
     border-radius: 50px;
-    box-shadow: 0 0 30px yellow;
 }
 
-.RouletteInput input{
+.RouletteInput input {
     width: 100%;
-    border: 4px solid black ;
+    border: 4px solid black;
     border-radius: 50px;
 }
 
-.BetColor
-{
+.BetColor {
     height: 100px;
     display: flex;
-    align-items:end;
+    align-items: end;
     text-align: center;
     justify-content: center;
     gap: 3.33%;
     margin: 0px 10px 20px 10px;
 }
 
-.BetColor div{
+.BetColor div {
     width: 30%;
     display: flex;
     flex-direction: column;
-    transition: 
-    margin-bottom 0.3s ease-in-out,
-    width 0.2s ease-in-out;
-    
+    transition:
+        margin-bottom 0.3s ease-in-out,
+        width 0.2s ease-in-out;
+
 
 }
 
-.BetColor div:hover{
+.BetColor div:hover {
     margin-bottom: 12px;
     width: 40%;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .BetColorBtn {
     width: 100%;
     color: white;
     margin: 8px 1px 1px 1px;
-    border-radius: 20px 20px 0px 0px ;
-    box-shadow: 0 0 30px yellow;
+    border-radius: 20px 20px 0px 0px;
+
 }
 
 .ColorBet {
@@ -160,43 +155,48 @@
     background-color: aliceblue;
     margin: 0px 1px 1px 1px;
     border-radius: 0px 0px 20px 20px;
-    box-shadow: 0 0 30px yellow;
+
 
 
 }
+
 /*-----------BOTONES Y SUS HOVER-------------*/
 .BetColorBtnRed {
-    background-color:red;
+    background-color: red;
+    box-shadow: 0 0 30px red;
 }
 
 .BetColorBtnGreen {
     background-color: limegreen;
+    box-shadow: 0 0 30px limegreen;
 }
 
 .BetColorBtnBlack {
     background-color: black;
+    box-shadow: 0 0 30px black;
 }
 
-.BottomButton{
+.BottomButton {
     align-items: center;
     text-align: center;
     margin: 10px;
-    
+
 }
 
-.BottomButton button{
+.BottomButton button {
     width: 90%;
     height: 50px;
-    border: 4px solid black ;
+    border: 4px solid black;
     border-radius: 50px;
     transition: width 0.3s;
-    box-shadow: 0 0 30px yellow;
-    
+    box-shadow: 0 0 30px black;
+
 }
 
-.BottomButton button:hover{
+.BottomButton button:hover {
     width: 100%;
     box-shadow: 0 0 30px yellow;
+
 }
 
 
@@ -214,5 +214,35 @@
     grid-area: footer;
     background-color: grey;
 
+
+}
+
+@media (max-width: 1150px) {
+    .RoulleteContainter {
+        width: 320px;
+    }
+
+    .Red,
+    .Black,
+    .Green {
+        transform: translateX(-240px);
+    }
+
+}
+
+@media (max-width: 600px) {
+    .RoulleteContainter {
+        width: 176px;
+    }
+
+    .Red,
+    .Black,
+    .Green {
+        transform: translateX(-313px);
+    }
+
+    .BetColorBtn{
+        font-size: 10px;
+    }
 
 }

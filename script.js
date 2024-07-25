@@ -5,6 +5,7 @@ var greenBet = 0;
 var redBet = 0;
 var blackBet = 0;
 
+
 $(".Wallet").html("Wallet: " + wallet);
 
 var roulette = "<span class='Green'>0</span>";
