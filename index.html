@@ -1,0 +1,66 @@
+<html>
+
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"
+        async></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <section class="layout">
+        <div class="header"></iconify-icon></div>
+        <div class="leftSide">2</div>
+        <div class="body">
+            <h1 class="Wallet mb-5 mt-3"></h1>
+            <div class="RoulleteContainter">
+                <div class="MidIndicator"></div>
+                <div id="RollerContainer">
+                </div>
+            </div>
+
+            <div class="RouletteInput">
+                <input class="BetInput form-control mt-4" onkeyup="BetInput('input')" placeholder="$$$">
+            </div>
+            <div class="BetColor">
+                <div class="BetRed">
+                    <button class="BetColorBtn BetColorBtnRed btn" data-color="Red">Red</button>
+                    <span class="ColorBet RedBet py-2">0</span>
+                </div>
+                <div class="BetGreen">
+                    <button class="BetColorBtn BetColorBtnGreen btn" data-color="Green">Green</button>
+                    <span class="ColorBet GreenBet py-2">0</span>
+                </div>
+                <div class="BetBlack">
+                    <button class="BetColorBtn BetColorBtnBlack btn" data-color="Black">Black</button>
+                    <span class="ColorBet BlackBet py-2">0</span>
+                </div>
+            </div>
+            <div class="BottomButton">
+                <button class="btn" onclick="SpinRoulette()">SPIN!</button>
+            </div>
+
+
+
+            <script src="script.js"></script>
+        </div>
+        <div class="rightSide">4</div>
+        <div class="footer">5</div>
+    </section>
+
+
+</body>
+
+</html>
