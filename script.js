@@ -1,4 +1,4 @@
-var wallet = 7000;
+var wallet = 14000;
 var currentInput = 0;
 
 var greenBet = 0;
@@ -36,9 +36,9 @@ function SpinRoulette() {
 
         var RanNum = Math.floor((Math.random() * 36) + 0);
         var SuspenceFactor = Math.floor(Math.random() * 8) - 4;
-
+        // SOLO PARA PRUEBAS var RanNum = 0 
         if (RanNum == 0) {
-            ResultColor = "Green";
+            ResultColor = "Limegreen";
         } else if (RanNum % 2 == 0) {
             ResultColor = "Red";
         } else {
@@ -59,7 +59,7 @@ function SpinRoulette() {
         setTimeout(function () {
             $(".BottomButtons, .BetColorBtn").prop("disabled", false);
 
-            if (greenBet > 0 && ResultColor == "Green") {
+            if (greenBet > 0 && ResultColor == "Limegreen") {
                 wallet = wallet + greenBet * 37 - redBet - blackBet;
             } else if (redBet > 0 && ResultColor == "Red") {
                 wallet = wallet + redBet - greenBet - blackBet;
@@ -86,21 +86,20 @@ function SpinRoulette() {
             redBet = greenBet = blackBet = 0;
 
         }, 5000);
-        if($("#Historial").children().length==10){
-            $('#Historial').children().last().addClass('.exit-right')
-            $('#Historial').children().last().remove();
-        }
-        
-        numeroHistorial = $('<span></span>')
-        numeroHistorial.text(RanNum)
-        numeroHistorial.addClass('NumeroHistorial','.enter-left')
-        numeroHistorial.css({
-            'background-color': ResultColor
-        })
 
-        $("#Historial").prepend(numeroHistorial)
-        console.log("hola", numeroHistorial)
+        setTimeout(function () {
+            if ($("#Historial").children().lenght == 10) {
+                $('#Historial').children().last().remove();
+            }
+            numeroHistorial = $('<span></span>')
+            numeroHistorial.text(RanNum)
+            numeroHistorial.addClass('NumeroHistorial', '.enter-left')
+            numeroHistorial.css({
+                'background-color': ResultColor
+            })
 
+            $("#Historial").prepend(numeroHistorial)
+        }, 5000)
     }
 }
 

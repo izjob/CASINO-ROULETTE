@@ -4,7 +4,7 @@
     display: grid;
     grid:
         "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 23% 54% 23%;
-    gap: 8px;
+    gap: 2px;
 }
 
 .header {
@@ -249,7 +249,7 @@
 
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1540px) {
     .RoulleteContainter {
         width: 320px;
     }
@@ -287,6 +287,19 @@
 
     .BetColor div:hover {
         margin-bottom: 18px;
+    }
+
+    .layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .layout > * {
+        display: none; /* Oculta todos los elementos hijos inicialmente */
+    }
+
+    .body {
+        display: block; /* Muestra solo el cuerpo principal */
     }
 
 }
