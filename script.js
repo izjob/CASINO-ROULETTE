@@ -1,4 +1,4 @@
-var wallet = 14000;
+var wallet = 1000;
 var currentInput = 0;
 
 var greenBet = 0;
@@ -17,6 +17,15 @@ for (var i = 1; i < 37; i++) {
     } else {
         roulette = roulette + "<span class='Black'>" + i + "</span>";
     }
+}
+
+for (var i = 0; i < 10; i++){
+    var emptyHistorial = $('<span></span>')
+            emptyHistorial.addClass('numeroHistorial', '.enter-left')
+            emptyHistorial.css({
+                'background-color': 'yellow',
+            })
+    $("#Historial").prepend(emptyHistorial)
 }
 
 roulette = roulette + roulette + roulette + roulette + roulette;
@@ -54,10 +63,10 @@ function SpinRoulette() {
             $("#RollerContainer").css({ "transition": "transform 5s ease", "transform": "translate(" + SpinPro + "%, 0%)" });
         }, 100);
 
-        $(".BottomButtons, .BetColorBtn").prop("disabled", true);
+        $(".Bet, .BtnSpin").css("pointer-events", "none");
 
         setTimeout(function () {
-            $(".BottomButtons, .BetColorBtn").prop("disabled", false);
+            $(".Bet, .Btnspin").css("pointer-events", "auto");
 
             if (greenBet > 0 && ResultColor == "Limegreen") {
                 wallet = wallet + greenBet * 37 - redBet - blackBet;
@@ -88,7 +97,8 @@ function SpinRoulette() {
         }, 5000);
 
         setTimeout(function () {
-            if ($("#Historial").children().lenght == 10) {
+
+            if ($("#Historial").children().length == 10) {
                 $('#Historial').children().last().remove();
             }
             numeroHistorial = $('<span></span>')
@@ -100,6 +110,7 @@ function SpinRoulette() {
 
             $("#Historial").prepend(numeroHistorial)
         }, 5000)
+        
     }
 }
 

@@ -3,7 +3,7 @@
 
     display: grid;
     grid:
-        "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 23% 54% 23%;
+        "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 20% 60% 20%;
     gap: 2px;
 }
 
@@ -94,6 +94,11 @@
     border-radius: 50px;
     box-shadow: 0 0 30px yellow;
 }
+
+.NumeroHistorial:first-child {
+    border: 4px solid yellow;
+}
+
 
 .Red {
     background-color: red;
@@ -186,16 +191,19 @@
 .BetColorBtnRed {
     background-color: red;
     box-shadow: 0 0 30px red;
+
 }
 
 .BetColorBtnGreen {
     background-color: limegreen;
     box-shadow: 0 0 30px limegreen;
+    border-radius: 20px 20px 0px 0px;
 }
 
 .BetColorBtnBlack {
     background-color: black;
     box-shadow: 0 0 30px black;
+    border-radius: 20px 20px 0px 0px;
 }
 
 .BottomButton {
@@ -249,7 +257,7 @@
 
 }
 
-@media (max-width: 1540px) {
+@media (max-width: 1440px) {
     .RoulleteContainter {
         width: 320px;
     }
@@ -258,6 +266,11 @@
     .Black,
     .Green {
         transform: translateX(-240px);
+    }
+
+    .NumeroHistorial {
+        height: 40px;
+        width: 40px;
     }
 
 }
@@ -274,10 +287,10 @@
     }
 
     .BetColorBtn {
-        text-align: end;
+        text-align: center;
         justify-content: end;
         justify-items: end;
-        font-size: 6px;
+        font-size: 15px;
     }
 
     .NumeroHistorial {
