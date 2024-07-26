@@ -19,12 +19,12 @@ for (var i = 1; i < 37; i++) {
     }
 }
 
-for (var i = 0; i < 10; i++){
+for (var i = 0; i < 10; i++) {
     var emptyHistorial = $('<span></span>')
-            emptyHistorial.addClass('numeroHistorial', '.enter-left')
-            emptyHistorial.css({
-                'background-color': 'yellow',
-            })
+    emptyHistorial.addClass('numeroHistorial', '.enter-left')
+    emptyHistorial.css({
+        'background-color': 'yellow',
+    })
     $("#Historial").prepend(emptyHistorial)
 }
 
@@ -69,7 +69,7 @@ function SpinRoulette() {
             $(".Bet, .Btnspin").css("pointer-events", "auto");
 
             if (greenBet > 0 && ResultColor == "Limegreen") {
-                wallet = wallet + greenBet * 37 - redBet - blackBet;
+                wallet = wallet + greenBet * 35 - redBet - blackBet;
             } else if (redBet > 0 && ResultColor == "Red") {
                 wallet = wallet + redBet - greenBet - blackBet;
             } else if (blackBet > 0 && ResultColor == "Black") {
@@ -110,7 +110,7 @@ function SpinRoulette() {
 
             $("#Historial").prepend(numeroHistorial)
         }, 5000)
-        
+
     }
 }
 
@@ -177,3 +177,6 @@ $(".BetBlack").click(function () {
         $(".BlackBet").html(blackBet);
     }
 });
+
+
+
