@@ -4,7 +4,8 @@
     display: grid;
     grid:
         "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 20% 60% 20%;
-    gap: 2px;
+    gap: 0px;
+    background-color: yellow;
 }
 
 .header {
@@ -47,10 +48,8 @@
     margin: auto;
     position: relative;
     width: 800px;
-    overflow: hidden;
-    border-radius: 5px;
-    border: solid yellow 4px;
-    box-shadow: 0 0 30px yellow;
+    border-radius: 40px;
+    margin-bottom: 10px;
 }
 
 
@@ -73,13 +72,26 @@
     animation-fill-mode: forwards;
 }
 
-#Historial {
+#Historial h4{
+width: 100%;
+
+padding: 3px;
+text-align: center;
+color: black;
+border: solid black;
+
+margin-bottom: 0px;
+background-color: white;
+}
+#Nums {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 1%;
     justify-content: center;
     align-items: center;
     margin-top: 5px;
+
+
 }
 
 .NumeroHistorial {
@@ -89,9 +101,8 @@
     justify-content: center;
     align-items: center;
     height: 50px;
-    width: 50px;
+    width: 9%;
     border-radius: 50px;
-    box-shadow: 0 0 30px yellow;
 }
 
 .NumeroHistorial:first-child {
@@ -122,14 +133,16 @@
     height: 88px;
     line-height: 88px;
     text-align: center;
-
+    border: solid yellow;
+    border-width: 4px 0px 4px 0px;
+    transform: translateX(-3252px);
 
 }
 
 .RouletteInput {
     align-items: center;
     text-align: center;
-    margin: 10px 10px 0px 10px;
+    margin: 10px 0px 0px 0px;
     border-radius: 50px;
 }
 
@@ -140,29 +153,28 @@
 }
 
 .BetColor {
+
     height: 100px;
     display: flex;
-    align-items: end;
-    text-align: center;
-    justify-content: center;
-    gap: 3.33%;
-    margin: 0px 10px 20px 10px;
+    justify-content:center;
+    gap: 2%;
+
+
+
 }
 
 .BetColor div {
-    width: 30%;
+    width: 35%;
     display: flex;
     flex-direction: column;
     transition:
-        margin-bottom 0.3s ease-in-out,
         width 0.2s ease-in-out;
 
 
 }
 
 .BetColor div:hover {
-    margin-bottom: 12px;
-    width: 40%;
+    width: 50%;
     cursor: pointer;
 }
 
@@ -189,20 +201,14 @@
 /*-----------BOTONES Y SUS HOVER-------------*/
 .BetColorBtnRed {
     background-color: red;
-    box-shadow: 0 0 30px red;
-
 }
 
 .BetColorBtnGreen {
     background-color: limegreen;
-    box-shadow: 0 0 30px limegreen;
-    border-radius: 20px 20px 0px 0px;
 }
 
 .BetColorBtnBlack {
     background-color: black;
-    box-shadow: 0 0 30px black;
-    border-radius: 20px 20px 0px 0px;
 }
 
 .BottomButton {
@@ -239,11 +245,6 @@
 }
 
 
-
-/*
--------------------------------------------------------------------------RULETA
-*/
-
 .rightSide {
     grid-area: rightSide;
     background-color: grey;
@@ -255,6 +256,11 @@
 
 
 }
+/*
+-------------------------------------------------------------------------RULETA
+*/
+
+
 
 @media (max-width: 1440px) {
     .RoulleteContainter {
@@ -264,13 +270,10 @@
     .Red,
     .Black,
     .Green {
-        transform: translateX(-240px);
+        transform: translateX(-3492px);
     }
 
-    .NumeroHistorial {
-        height: 33px;
-        width: 33px;
-    }
+
 
 }
 
@@ -282,24 +285,35 @@
     .Red,
     .Black,
     .Green {
-        transform: translateX(-313px);
+        transform: translateX(-309px);
     }
+    .BetColor{
+        margin-top: 60px;
+        align-items: center;
+        flex-direction: column
+    }
+    .BetColor div{
+        width: 90%;
+    }
+    .Bet button,.Bet span {
 
-    .BetColorBtn {
-        text-align: center;
-        justify-content: end;
-        justify-items: end;
-        font-size: 15px;
+        height: 30px;
+        font-size: 10px;
+        
+
+
+        
+    }
+    .BottomButton{
+        position: relative;
     }
 
     .NumeroHistorial {
-        height: 28px;
-        width: 28px;
         font-size: 10px;
     }
 
     .BetColor div:hover {
-        margin-bottom: 18px;
+        width: 100%;
     }
 
     .layout {

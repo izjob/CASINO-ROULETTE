@@ -25,7 +25,7 @@ for (var i = 0; i < 10; i++) {
     emptyHistorial.css({
         'background-color': 'yellow',
     })
-    $("#Historial").prepend(emptyHistorial)
+    $("#Nums").prepend(emptyHistorial)
 }
 
 roulette = roulette + roulette + roulette + roulette + roulette;
@@ -98,8 +98,8 @@ function SpinRoulette() {
 
         setTimeout(function () {
 
-            if ($("#Historial").children().length == 10) {
-                $('#Historial').children().last().remove();
+            if ($("#Nums").children().length == 10) {
+                $('#Nums').children().last().remove();
             }
             numeroHistorial = $('<span></span>')
             numeroHistorial.text(RanNum)
@@ -108,7 +108,7 @@ function SpinRoulette() {
                 'background-color': ResultColor
             })
 
-            $("#Historial").prepend(numeroHistorial)
+            $("#Nums").prepend(numeroHistorial)
         }, 5000)
 
     }
@@ -151,10 +151,17 @@ function BetInput(betInput) {
     }
 }
 
+
+
 $(".BetRed").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
-    } else {
+    }
+    else if (greenBet + redBet + blackBet + $(".BetInput").val()> wallet) {
+        alert("Bet bigger than wallet");
+        cLearBets();
+    }
+    else {
         redBet = redBet + parseInt($(".BetInput").val());
         $(".RedBet").html(redBet);
     }
@@ -163,7 +170,12 @@ $(".BetRed").click(function () {
 $(".BetGreen").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
-    } else {
+    }
+    else if (greenBet + redBet + blackBet + $(".BetInput").val()> wallet) {
+        alert("Bet bigger than wallet");
+        cLearBets();
+    } 
+    else {
         greenBet = greenBet + parseInt($(".BetInput").val());
         $(".GreenBet").html(greenBet);
     }
@@ -172,7 +184,12 @@ $(".BetGreen").click(function () {
 $(".BetBlack").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
-    } else {
+    } 
+    else if (greenBet + redBet + blackBet + $(".BetInput").val()> wallet) {
+        alert("Bet bigger than wallet");
+        cLearBets();
+    }
+    else {
         blackBet = blackBet + parseInt($(".BetInput").val());
         $(".BlackBet").html(blackBet);
     }
