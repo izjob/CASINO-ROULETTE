@@ -8,6 +8,9 @@ app.use(cors({
     origin: 'http://127.0.0.1:5500'
 }));  
 
+
+
+
 // Configura la conexión a la base de datos
 const connection = mysql.createConnection({
   host: 'beaxenh9alvmjjzccly3-mysql.services.clever-cloud.com',

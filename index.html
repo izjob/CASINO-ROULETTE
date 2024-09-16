@@ -18,7 +18,7 @@
 <body>
     <section class="layout">
         <div class="header">1</div>
-        <div class="leftSide">2</div>
+
         <div class="body">
             <h1 class="Wallet"></h1>
             <div class="RoulleteContainter">
@@ -29,7 +29,7 @@
             
             <div id="Historial">
             <h4><iconify-icon icon="material-symbols:arrow-circle-down-rounded"></iconify-icon>LAST 10<iconify-icon icon="material-symbols:arrow-circle-down-rounded"></iconify-icon></h4>
-            <div id="Nums">
+            <div id="NumList">
 
             </div>
             </div>
@@ -37,15 +37,15 @@
                 <input class="BetInput form-control" onkeyup="BetInput('input')" placeholder="$$$">
             </div>
             <div class="BetColor">
-                <div class="Bet BetRed">
+                <div class="BetRed">
                     <button class="BetColorBtn BetColorBtnRed btn" data-color="Red">Red (x2)</button>
                     <span class="ColorBet RedBet py-2">0</span>
                 </div>
-                <div class="Bet BetGreen">
+                <div class="BetGreen">
                     <button class="BetColorBtn BetColorBtnGreen btn" data-color="Green">Green (x36)</button>
                     <span class="ColorBet GreenBet py-2">0</span>
                 </div>
-                <div class="Bet BetBlack">
+                <div class="BetBlack">
                     <button class="BetColorBtn BetColorBtnBlack btn" data-color="Black">Black (x2)</button>
                     <span class="ColorBet BlackBet py-2">0</span>
                 </div>
@@ -65,9 +65,10 @@
         <div class="rightSide">
             <table id="ranking-table">
                 <thead>
+                  <th colspan="2">RANKING</th>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Puntos</th>
+                    <th>NOMBRE</th>
+                    <th>PUNTOS</th>
                   </tr>
                 </thead>
                 <tbody>

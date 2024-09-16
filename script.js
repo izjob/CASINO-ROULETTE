@@ -25,7 +25,7 @@ for (var i = 0; i < 10; i++) {
     emptyHistorial.css({
         'background-color': 'yellow',
     })
-    $("#Nums").prepend(emptyHistorial)
+    $("#NumList").prepend(emptyHistorial)
 }
 
 roulette = roulette + roulette + roulette + roulette + roulette;
@@ -98,8 +98,8 @@ function SpinRoulette() {
 
         setTimeout(function () {
 
-            if ($("#Nums").children().length == 10) {
-                $('#Nums').children().last().remove();
+            if ($("#NumList").children().length == 10) {
+                $('#NumList').children().last().remove();
             }
             numeroHistorial = $('<span></span>')
             numeroHistorial.text(RanNum)
@@ -108,7 +108,7 @@ function SpinRoulette() {
                 'background-color': ResultColor
             })
 
-            $("#Nums").prepend(numeroHistorial)
+            $("#NumList").prepend(numeroHistorial)
         }, 5000)
 
     }

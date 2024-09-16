@@ -3,20 +3,20 @@
     height: 100%;
     display: grid;
     grid:
-        "header header header" auto "leftSide body rightSide" 1fr "footer footer footer" auto / 20% 60% 20%;
-    gap: 0px;
+      "header header header" auto
+      "body body rightSide" 1fr
+      "footer footer footer" auto
+    / 0% 80% 20%;
+    gap: 1px;
     background-color: yellow;
-}
+    overflow: hidden;
+  }
 
 .header {
     grid-area: header;
     background-color: grey;
 }
 
-.leftSide {
-    grid-area: leftSide;
-    background-color: grey;
-}
 
 .body {
     grid-area: body;
@@ -72,58 +72,6 @@
     animation-fill-mode: forwards;
 }
 
-#Historial h4{
-width: 100%;
-
-padding: 3px;
-text-align: center;
-color: black;
-border: solid black;
-
-margin-bottom: 0px;
-background-color: white;
-}
-#Nums {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1%;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5px;
-
-
-}
-
-.NumeroHistorial {
-    color: white;
-    border: 2px solid yellow;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    width: 9%;
-    border-radius: 50px;
-}
-
-.NumeroHistorial:first-child {
-    border: 4px solid yellow;
-}
-
-
-.Red {
-    background-color: red;
-
-
-}
-
-.Black {
-    background-color: black;
-}
-
-.Green {
-    background-color: limegreen;
-}
-
 .Red,
 .Black,
 .Green {
@@ -136,8 +84,53 @@ background-color: white;
     border: solid yellow;
     border-width: 4px 0px 4px 0px;
     transform: translateX(-3252px);
-
 }
+
+.Red {
+    background-color: red;
+}
+
+.Black {
+    background-color: black;
+}
+
+.Green {
+    background-color: limegreen;
+}
+
+#Historial h4{
+    width: 100%;
+    padding: 3px;
+    text-align: center;
+    color: black;
+    border: solid black;
+    margin-bottom: 0px;
+    background-color: white;
+    }
+    #NumList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1%;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+    
+    
+    }
+    .NumeroHistorial {
+        color: white;
+        border: 2px solid yellow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        width: 9%;
+        border-radius: 50px;
+    }
+    
+    .NumeroHistorial:first-child {
+        border: 4px solid yellow;
+    }
 
 .RouletteInput {
     align-items: center;
@@ -153,14 +146,10 @@ background-color: white;
 }
 
 .BetColor {
-
     height: 100px;
     display: flex;
     justify-content:center;
     gap: 2%;
-
-
-
 }
 
 .BetColor div {
@@ -198,7 +187,6 @@ background-color: white;
 
 }
 
-/*-----------BOTONES Y SUS HOVER-------------*/
 .BetColorBtnRed {
     background-color: red;
 }
@@ -215,7 +203,6 @@ background-color: white;
     align-items: center;
     text-align: center;
     margin: 10px;
-
 }
 
 .BottomButton button {
@@ -227,7 +214,6 @@ background-color: white;
     box-shadow: 0 0 30px black;
     text-align: center;
     font-size: 20px;
-
 }
 
 .BottomButton button:hover {
@@ -241,28 +227,37 @@ background-color: white;
 
 .BottomButton button:hover iconify-icon {
     animation: rotar 0.1s infinite;
-
 }
-
 
 .rightSide {
     grid-area: rightSide;
     background-color: grey;
 }
+table{
+    width: 100%;
+    border: solid black;
+    text-align: center;
+}
+
+tr th {
+    background-color: yellow;
+    
+    border: solid black;
+
+}
+tr td {
+    background-color: white;
+    border: solid gray;
+
+}
 
 .footer {
     grid-area: footer;
     background-color: grey;
-
-
 }
-/*
--------------------------------------------------------------------------RULETA
-*/
 
 
-
-@media (max-width: 1440px) {
+@media (max-width: 1050px) {
     .RoulleteContainter {
         width: 320px;
     }
@@ -273,11 +268,9 @@ background-color: white;
         transform: translateX(-3492px);
     }
 
-
-
 }
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
     .RoulleteContainter {
         width: 176px;
     }
@@ -287,34 +280,34 @@ background-color: white;
     .Green {
         transform: translateX(-309px);
     }
-    .BetColor{
-        margin-top: 60px;
-        align-items: center;
-        flex-direction: column
-    }
-    .BetColor div{
-        width: 90%;
-    }
-    .Bet button,.Bet span {
-
-        height: 30px;
-        font-size: 10px;
-        
-
-
-        
-    }
-    .BottomButton{
-        margin-top: 80px;
-        position: relative;
-    }
 
     .NumeroHistorial {
         font-size: 10px;
     }
 
+    .BetColor{
+        margin-top: 85px;
+        align-items: center;
+        flex-direction: column
+    }
+
+    .BetColor div{
+        width: 90%;
+    }
+
     .BetColor div:hover {
         width: 100%;
+    }
+
+    .Bet button,.Bet span {
+        height: 30px;
+        font-size: 10px;
+        
+        
+    }
+    .BottomButton{
+        margin-top: 100px;
+        position: relative;
     }
 
     .layout {
