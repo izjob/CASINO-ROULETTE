@@ -4,9 +4,11 @@ body {
     height: auto;
     background: rgb(35, 255, 0);
     background: radial-gradient(circle, rgba(35, 255, 0, 1) 0%, rgba(34, 121, 9, 1) 51%, rgba(0, 89, 15, 1) 100%);
-
 }
-
+#main{
+    overflow: hidden;
+    width: 100%;
+}
 .header {
     grid-area: header;
     background-color: grey;
@@ -29,6 +31,7 @@ body {
     justify-content: end;
     background-color: yellow;
     height: 100%;
+    overflow: hidden;
 
 
 }
