@@ -3,116 +3,97 @@
 <head>
 
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="./style.css">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <link rel="stylesheet" href="./style.css">
+
 </head>
 
 <body>
-    <section class="layout">
-        <div class="header">1</div>
 
-        <div class="body">
-            <h1 class="Wallet"></h1>
-            <div class="RoulleteContainter">
-                <div class="MidIndicator"></div>
-                <div id="RollerContainer">
-                </div>
-            </div>
-            
-            <div id="Historial">
-            <h4><iconify-icon icon="material-symbols:arrow-circle-down-rounded"></iconify-icon>LAST 10<iconify-icon icon="material-symbols:arrow-circle-down-rounded"></iconify-icon></h4>
-            <div id="NumList">
-
-            </div>
-            </div>
-            <div class="RouletteInput">
-                <input class="BetInput form-control" onkeyup="BetInput('input')" placeholder="$$$">
-            </div>
-            <div class="BetColor">
-                <div class="BetRed">
-                    <button class="BetColorBtn BetColorBtnRed btn" data-color="Red">Red (x2)</button>
-                    <span class="ColorBet RedBet py-2">0</span>
-                </div>
-                <div class="BetGreen">
-                    <button class="BetColorBtn BetColorBtnGreen btn" data-color="Green">Green (x36)</button>
-                    <span class="ColorBet GreenBet py-2">0</span>
-                </div>
-                <div class="BetBlack">
-                    <button class="BetColorBtn BetColorBtnBlack btn" data-color="Black">Black (x2)</button>
-                    <span class="ColorBet BlackBet py-2">0</span>
-                </div>
-            </div>
-            
-             <div class="BottomButton">
-                <button class="btn BtnSpin" onclick="SpinRoulette()">
-                    <iconify-icon icon="ph:poker-chip-bold"></iconify-icon>
-                    &#160 SPIN! &#160
-                    <iconify-icon icon="ph:poker-chip-bold"></iconify-icon></button>
-            </div> 
-
-
-
-            <script src="script.js"></script>
+    <div class="header">
+      <img src="./logo.png" id="logo">
+      <div id="loginContainer">
+        <button id="btnlogin">
+          login
+        </button>
+        <div id="userdiv">
+          eluser
         </div>
-        <div class="rightSide">
-            <table id="ranking-table">
-                <thead>
-                  <th colspan="2">RANKING</th>
-                  <tr>
-                    <th>NOMBRE</th>
-                    <th>PUNTOS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Aquí irán las filas de datos -->
-                </tbody>
-              </table>
-            
-              <script>
-                // Función para cargar los datos desde el servidor
-                async function loadRanking() {
-                  try {
-                    const response = await fetch('http://localhost:3000/ranking');
-                    const data = await response.json();
-                    const tableBody = document.querySelector('#ranking-table tbody');
-            
-                    if (data.length > 0) {
-                      // Crear filas de datos
-                      data.forEach(row => {
-                        const tr = document.createElement('tr');
-                        const tdName = document.createElement('td');
-                        const tdPoints = document.createElement('td');
-            
-                        tdName.textContent = row.username;
-                        tdPoints.textContent = row.puntos;
-            
-                        tr.appendChild(tdName);
-                        tr.appendChild(tdPoints);
-                        tableBody.appendChild(tr);
-                      });
-                    } else {
-                      tableBody.innerHTML = '<tr><td colspan="2">No hay datos disponibles</td></tr>';
-                    }
-                  } catch (error) {
-                    console.error('Error al cargar el ranking:', error);
-                  }
-                }
-            
-                // Cargar el ranking al cargar la página
-                document.addEventListener('DOMContentLoaded', loadRanking);
-              </script>
+        <button id="btnlogout">
+          <iconify-icon icon="uil:signout"></iconify-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="body">
+      <h1 class="Wallet"></h1>
+      <div class="RoulleteContainter">
+        <div class="MidIndicator"></div>
+        <div id="RollerContainer">
         </div>
-        <div class="footer">
+      </div>
+
+      <div id="Historial">
+        <h4><iconify-icon icon="material-symbols:arrow-circle-down-rounded"></iconify-icon>LAST 10<iconify-icon
+            icon="material-symbols:arrow-circle-down-rounded"></iconify-icon></h4>
+        <div id="NumList">
+
         </div>
-    </section>
+      </div>
+      <div class="RouletteInput">
+        <input class="BetInput form-control" placeholder="$$$">
+      </div>
+      <div class="BetColor">
+        <div class="BetRed">
+          <button class="BetColorBtn BetColorBtnRed btn" data-color="Red">Red (x2)</button>
+          <span class="ColorBet RedBet py-2">0</span>
+        </div>
+        <div class="BetGreen">
+          <button class="BetColorBtn BetColorBtnGreen btn" data-color="Green">Green (x36)</button>
+          <span class="ColorBet GreenBet py-2">0</span>
+        </div>
+        <div class="BetBlack">
+          <button class="BetColorBtn BetColorBtnBlack btn" data-color="Black">Black (x2)</button>
+          <span class="ColorBet BlackBet py-2">0</span>
+        </div>
+      </div>
+
+      <div class="BottomButton">
+        <button class="btn BtnSpin">
+          <iconify-icon icon="ph:poker-chip-bold"></iconify-icon>
+          &#160 SPIN! &#160
+          <iconify-icon icon="ph:poker-chip-bold"></iconify-icon></button>
+      </div>
+
+      <script src="script.js" type="module"></script>
+
+      <div class="ranking">
+        <table id="ranking-table">
+          <thead>
+            <th colspan="2">RANKING</th>
+            <tr>
+              <th>NOMBRE</th>
+              <th>PUNTOS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí irán las filas de datos -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+    </div>
+
 
 
 </body>

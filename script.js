@@ -1,3 +1,30 @@
+//login
+import {login, logout} from "./auth.js"
+
+var btnlogin = $('#btnlogin')
+var btnlogout = $('#btnlogout')
+
+btnlogin.on("click", async (e) => {
+    try {     
+        await login()
+        btnlogin.hide()
+    } catch (error) {
+        
+    }
+})
+
+btnlogout.on("click", async (e) => {
+    try {
+        //console.log("funciona")
+        await logout()
+        btnlogin.show()
+    } catch (error) {
+        
+    }
+})
+
+
+
 var wallet = 1000;
 var currentInput = 0;
 
@@ -32,8 +59,8 @@ roulette = roulette + roulette + roulette + roulette + roulette;
 
 document.getElementById('RollerContainer').innerHTML = roulette;
 
-function SpinRoulette() {
-
+var BtnSpin = $('.BtnSpin')
+BtnSpin.on('click',()=>{
     if (greenBet + redBet + blackBet > wallet) {
         alert("Bet bigger than wallet");
         cLearBets();
@@ -101,7 +128,7 @@ function SpinRoulette() {
             if ($("#NumList").children().length == 10) {
                 $('#NumList').children().last().remove();
             }
-            numeroHistorial = $('<span></span>')
+            var numeroHistorial = $('<span></span>')
             numeroHistorial.text(RanNum)
             numeroHistorial.addClass('NumeroHistorial', '.enter-left')
             numeroHistorial.css({
@@ -112,46 +139,12 @@ function SpinRoulette() {
         }, 5000)
 
     }
-}
+})
 
 function cLearBets() {
     $(".BlackBet, .GreenBet, .RedBet").html("0");
     redBet = greenBet = blackBet = 0;
 }
-
-function BetInput(betInput) {
-
-    currentInput = $(".BetInput").val();
-
-    if (currentInput.match(/[a-z]/i) && $(".BetInput").val() != "") {
-        alert("Please only enter numbers");
-    }
-
-    if (betInput == "clear") {
-        $(".BetInput").val("");
-        currentInput = 0;
-    } else if (betInput == "1/2") {
-        currentInput = Math.round(currentInput / 2);
-        $(".BetInput").val(currentInput);
-    } else if (betInput == "x2") {
-        $(".BetInput").val(currentInput * 2);
-        currentInput = currentInput * 2;
-    } else if (betInput == "ai") {
-        $(".BetInput").val(wallet);
-        currentInput = wallet;
-    } else if (betInput == "input") {
-
-    } else {
-        if (currentInput == "") {
-            currentInput = 0;
-        }
-
-        $(".BetInput").val(parseInt(currentInput) + parseInt(betInput));
-        currentInput = parseInt(currentInput) + parseInt(betInput);
-    }
-}
-
-
 
 $(".BetRed").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
