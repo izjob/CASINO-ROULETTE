@@ -1,23 +1,50 @@
+//overlay
+$('#overlay').on("click",() =>{
+    alert('To play, you need to log in.')
+})
+
+
 //login
 import {login, logout} from "./auth.js"
-
+import {start,getPoints} from "./firestore.js"
 var btnlogin = $('#btnlogin')
+var overlay = $('#overlay')
 var btnlogout = $('#btnlogout')
+
+
+var wallet = '???';
+$(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+
 
 btnlogin.on("click", async (e) => {
     try {     
-        await login()
+        var currentUser= await login()
+        var user = currentUser
+        start(currentUser)
+        //console.log('funciona')
+
+
+
+        $('#userdiv').text(currentUser.displayName)
         btnlogin.hide()
+        overlay.hide()
+        console.log(getPoints(currentUser))
+        wallet= await getPoints(currentUser)
+        $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+
+
     } catch (error) {
-        
+        console.log(error)
     }
 })
+
 
 btnlogout.on("click", async (e) => {
     try {
         //console.log("funciona")
         await logout()
         btnlogin.show()
+        overlay.show()
     } catch (error) {
         
     }
@@ -25,7 +52,7 @@ btnlogout.on("click", async (e) => {
 
 
 
-var wallet = 1000;
+
 var currentInput = 0;
 
 var greenBet = 0;
@@ -33,8 +60,7 @@ var redBet = 0;
 var blackBet = 0;
 
 
-$(".Wallet").html("Wallet: " + wallet);
-
+//$(".Wallet").html('<span id="vcoins">Wallet: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon></span><button><iconify-icon icon="icon-park-outline:video"></iconify-icon>=+50<iconify-icon icon="ri:coins-line"></iconify-icon></button>');
 var roulette = "<span class='Green'>0</span>";
 
 for (var i = 1; i < 37; i++) {
@@ -104,16 +130,9 @@ BtnSpin.on('click',()=>{
             } else if (blackBet > 0 || redBet > 0 || greenBet > 0) {
                 wallet = wallet - redBet - greenBet - blackBet;
 
-                if (wallet == 0) {
+                if (wallet < 50) {
+                    wallet=50
                     $(".Wallet").html("Wallet: " + wallet);
-                    var newGame = confirm("You're out of money would you like to add another 1000");
-
-                    if (newGame == true) {
-                        wallet = 1000;
-                        $(".Wallet").html("Wallet: " + wallet);
-                    } else {
-                        alert("Oh well I hope you had fun while it lasted")
-                    }
                 }
             }
 

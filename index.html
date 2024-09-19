@@ -17,17 +17,16 @@
 </head>
 
 <body>
-<div id="main">
-
-
+  <div id="main">
+    <div id="overlay"></div>
     <div class="header">
       <img src="./logo.png" id="logo">
       <div id="loginContainer">
         <button id="btnlogin">
-          login
+          LOGIN (GOOGLE)
         </button>
         <div id="userdiv">
-          eluser
+
         </div>
         <button id="btnlogout">
           <iconify-icon icon="uil:signout"></iconify-icon>
@@ -69,23 +68,35 @@
       </div>
 
       <div class="BottomButton">
-        <button class="btn BtnSpin">
+        <button class="BtnSpin">
           <iconify-icon icon="ph:poker-chip-bold"></iconify-icon>
           &#160 SPIN! &#160
           <iconify-icon icon="ph:poker-chip-bold"></iconify-icon></button>
       </div>
 
-      <script src="script.js" type="module"></script>
+      <script src="app.js" type="module"></script>
 
       <div class="ranking">
-        <table id="ranking-table">
+        <table id="ranking-rt">
           <thead>
-            <th colspan="2">RANKING</th>
+            <th colspan="2">RANKING<br> (Real-Time)</th>
             <tr>
-              <th>NOMBRE</th>
-              <th>PUNTOS</th>
+              <th>NAME</th>
+              <th>POINTS</th>
             </tr>
-            
+          </thead>
+          <tbody>
+            <!-- Aquí irán las filas de datos -->
+          </tbody>
+        </table>
+        <table id="ranking-at">
+          <thead>
+            <th colspan="3">RANKING<br>(All-Time)</th>
+            <tr>
+              <th>NAME</th>
+              <th>POINTS</th>
+              <th>DATE</th>
+            </tr>
           </thead>
           <tbody>
             <!-- Aquí irán las filas de datos -->
@@ -93,11 +104,15 @@
         </table>
       </div>
     </div>
+  </div>
 
-    <div class="footer">
+  <div class="footer">
+    <div id="linkedin">
+      <a href="linkedin.com/in/ismael-zian"><iconify-icon icon="bi:linkedin"></iconify-icon>linkedin.com/in/ismael-zian</a>
     </div>
-
-
+    <div id="github">
+      <a href="github.com/izjob"><iconify-icon icon="bi:github"></iconify-icon>github.com/izjob</a>
+    </div>
   </div>
 </body>
 

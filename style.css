@@ -7,7 +7,19 @@ body {
 }
 #main{
     overflow: hidden;
+    position: relative;
+}
+/*a*/
+#overlay{
+    position: absolute;
+    top: 50;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
     width: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    z-index: 2;
 }
 .header {
     grid-area: header;
@@ -16,12 +28,12 @@ body {
 }
 
 #logo {
-    margin: -2px 0px 0px -6px;
+    margin: -8px 0px 0px -6px;
     position: absolute;
     width: 30%;
     height: 70px;
     z-index: 9;
-    filter: drop-shadow(-6px 1px black);
+    filter: drop-shadow( -2px 7px black);
 }
 
 #loginContainer {
@@ -29,7 +41,7 @@ body {
     display: flex;
     align-items: end;
     justify-content: end;
-    background-color: yellow;
+    background-color: gold;
     height: 100%;
     overflow: hidden;
 
@@ -43,7 +55,7 @@ body {
     right: 0;
     z-index: 1;
     height: 100%;
-    width: 20%;
+    width: calc(30% + 60px);
     text-align: center;
     /* Esta propiedad centra el texto horizontalmente */
     border: solid black 2px;
@@ -54,7 +66,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15%;
+    width: 30%;
     height: 100%;
     background-color: lime;
     margin-left: 5%;
@@ -67,7 +79,7 @@ body {
     height: 100%;
     z-index: 0;
     background-color: red;
-    width: 5%;
+    width: 60px;
 }
 
 
@@ -79,11 +91,21 @@ body {
     width: 100%;
     text-align: center;
     margin: 10px 0px 40px 0px;
-    color: yellow;
-    text-shadow: 0 0 30px yellow;
+    color: gold;
+    text-shadow: 0 0 30px gold;
     font-size: 200%;
     margin: 10px;
 
+}
+
+.Wallet button {
+    background-color: gold;
+    border-radius: 10px;
+}
+
+.Wallet button:hover {
+    border-radius:50px;
+    box-shadow: 0 0 30px gold;
 }
 
 .RoulleteContainter {
@@ -104,7 +126,7 @@ body {
     width: 50%;
     height: 100%;
     z-index: 100;
-    border-right: solid yellow 2px;
+    border-right: solid gold 2px;
 }
 
 #RollerContainer {
@@ -123,7 +145,7 @@ body {
     height: 88px;
     line-height: 88px;
     text-align: center;
-    border: solid yellow;
+    border: solid gold;
     border-width: 4px 0px 4px 0px;
     transform: translateX(-3252px);
 }
@@ -163,7 +185,7 @@ body {
 
 .NumeroHistorial {
     color: white;
-    border: 2px solid yellow;
+    border: 2px solid gold;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,7 +195,7 @@ body {
 }
 
 .NumeroHistorial:first-child {
-    border: 4px solid yellow;
+    border: 4px solid gold;
 }
 
 .RouletteInput {
@@ -251,22 +273,22 @@ body {
 
 .BottomButton button {
     width: 90%;
-    height: 50px;
+    height: 70px;
     border: 4px solid black;
     border-radius: 50px;
     transition: width 0.3s;
     box-shadow: 0 0 30px black;
     text-align: center;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 .BottomButton button:hover {
     width: 100%;
-    box-shadow: 0 0 30px yellow;
+    box-shadow: 0 0 30px gold;
 }
 
 .BottomButton button iconify-icon {
-    font-size: 19px;
+    font-size: 30px;
 }
 
 .BottomButton button:hover iconify-icon {
@@ -282,7 +304,7 @@ table {
 
 tr th {
     width: 50%;
-    background-color: yellow;
+    background-color: gold;
     border: solid black;
 
 }
@@ -294,10 +316,45 @@ tr td {
 
 }
 
-.footer {
-    grid-area: footer;
-    background-color: grey;
+#ranking-at tr th {
+    width: 33.3%;
 }
+#ranking-at tr td {
+    width: 33.3%;
+}
+
+.footer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 75px;
+    width: 100%;
+    background-color: gold;
+    padding: 5px;
+    gap: 30%;
+    margin-bottom: 0;
+    font-size: 25px;
+
+}
+.footer iconify-icon{
+    font-size: 20px;
+    margin: 0%;
+    margin-right: 4px;
+
+}
+#linkedin #github{
+    display: flex;
+
+}
+a{
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+
 
 
 @media (max-width: 1050px) {
@@ -316,9 +373,14 @@ tr td {
 @media (max-width: 760px) {
 
     #logo {
-        width: 80%;
+        width: 55%;
     }
-
+    #btnlogin{
+        font-size: 10px;
+    }
+    #userdiv{
+        font-size: 10px;
+    }
     .RoulleteContainter {
         width: 176px;
     }
@@ -331,32 +393,31 @@ tr td {
 
     .NumeroHistorial {
         font-size: 10px;
+        height: 20px;
     }
 
     .BetColor {
-        margin-top: 85px;
         align-items: center;
-        flex-direction: column
+        flex-direction: column;
+        margin-top: 60px;
     }
 
     .BetColor div {
-        width: 90%;
+        width: 90%;       
     }
 
     .BetColor div:hover {
         width: 100%;
     }
 
-    .Bet button,
-    .Bet span {
+    .BetColorBtn,
+    .BetColor span {
         height: 30px;
         font-size: 10px;
-
-
     }
 
     .BottomButton {
-        margin-top: 100px;
+        margin-top: 70px;
         position: relative;
     }
 
@@ -374,7 +435,18 @@ tr td {
         display: block;
         /* Muestra solo el cuerpo principal */
     }
+    .footer{
+        font-size: 15px;
+    }
 
+}
+
+@media (min-height: 720px){
+    .footer{
+        top: 900px;
+        position: absolute;
+        bottom: 0;
+    }
 }
 
 /*------------------------------------ANIMACIONES--------------------*/
