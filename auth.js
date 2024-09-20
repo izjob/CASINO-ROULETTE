@@ -1,5 +1,5 @@
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 //import { getStorage } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
 
@@ -10,11 +10,17 @@ const firebaseConfig = {
     projectId: "izcasinoroulette",
     storageBucket: "izcasinoroulette.appspot.com",
     messagingSenderId: "581691954571",
-    appId: "1:581691954571:web:e73df3eb4f89218a098b8e"
+    appId: "1:581691954571:web:e73df3eb4f89218a098b8e",
+    databaseURL: "https://izcasinoroulette-default-rtdb.firebaseio.com/"
     };
 
 // Inicializa Firebase
-const app = initializeApp(firebaseConfig);
+let app;
+if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = getApps()[0];
+}
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 

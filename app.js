@@ -1,3 +1,21 @@
+//ranking
+
+var tbodyrt= $('#tbody-rt')
+var tbodyat= $('#tbody-at')
+
+    rankingRTUpdate()
+
+
+async function rankingRTUpdate() {
+    var ranking= await getRankingRT()
+    tbodyrt.empty()
+    ranking.forEach(user => {
+    var row=`<tr><td>${user.displayName}</td><td>${user.points}</td></tr>`
+    console.log(row)
+    tbodyrt.append(row)
+});
+}
+
 //overlay
 $('#overlay').on("click",() =>{
     alert('To play, you need to log in.')
@@ -6,7 +24,8 @@ $('#overlay').on("click",() =>{
 
 //login
 import {login, logout} from "./auth.js"
-import {start,getPoints} from "./firestore.js"
+import {start,getPoints,updatePoints,getRankingRT} from "./firestore.js"
+
 var btnlogin = $('#btnlogin')
 var overlay = $('#overlay')
 var btnlogout = $('#btnlogout')
@@ -15,21 +34,22 @@ var btnlogout = $('#btnlogout')
 var wallet = '???';
 $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
-
+var user
 btnlogin.on("click", async (e) => {
     try {     
         var currentUser= await login()
-        var user = currentUser
-        start(currentUser)
+        user = currentUser
+        start(user)
         //console.log('funciona')
 
 
 
-        $('#userdiv').text(currentUser.displayName)
+        $('#userdiv').text(user.displayName)
         btnlogin.hide()
         overlay.hide()
-        console.log(getPoints(currentUser))
-        wallet= await getPoints(currentUser)
+        console.log(user.uid)
+        console.log(await getPoints(user))
+        wallet= await getPoints(user)
         $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 
@@ -45,6 +65,8 @@ btnlogout.on("click", async (e) => {
         await logout()
         btnlogin.show()
         overlay.show()
+        wallet='???'
+        $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
     } catch (error) {
         
     }
@@ -140,9 +162,6 @@ BtnSpin.on('click',()=>{
             $(".BlackBet, .GreenBet, .RedBet").html("0");
             redBet = greenBet = blackBet = 0;
 
-        }, 5000);
-
-        setTimeout(function () {
 
             if ($("#NumList").children().length == 10) {
                 $('#NumList').children().last().remove();
@@ -155,6 +174,8 @@ BtnSpin.on('click',()=>{
             })
 
             $("#NumList").prepend(numeroHistorial)
+            updatePoints(user,wallet)
+            
         }, 5000)
 
     }
@@ -169,11 +190,11 @@ $(".BetRed").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
     }
-    else if (greenBet + redBet + blackBet + $(".BetInput").val()> wallet) {
-        alert("Bet bigger than wallet");
+    else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
+        alert("Bet bigger than wallet"+wallet);
         cLearBets();
     }
-    else {
+    else{
         redBet = redBet + parseInt($(".BetInput").val());
         $(".RedBet").html(redBet);
     }
@@ -183,7 +204,7 @@ $(".BetGreen").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
     }
-    else if (greenBet + redBet + blackBet + $(".BetInput").val()> wallet) {
+    else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
         alert("Bet bigger than wallet");
         cLearBets();
     } 
@@ -197,7 +218,7 @@ $(".BetBlack").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
     } 
-    else if (greenBet + redBet + blackBet + $(".BetInput").val()> wallet) {
+    else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
         alert("Bet bigger than wallet");
         cLearBets();
     }

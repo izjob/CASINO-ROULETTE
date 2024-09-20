@@ -85,7 +85,7 @@
               <th>POINTS</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tbody-rt">
             <!-- Aquí irán las filas de datos -->
           </tbody>
         </table>
@@ -98,7 +98,7 @@
               <th>DATE</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tbody-at">
             <!-- Aquí irán las filas de datos -->
           </tbody>
         </table>
@@ -108,12 +108,48 @@
 
   <div class="footer">
     <div id="linkedin">
-      <a href="linkedin.com/in/ismael-zian"><iconify-icon icon="bi:linkedin"></iconify-icon>linkedin.com/in/ismael-zian</a>
+      <a
+        href="https://www.linkedin.com/in/ismael-zian?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BmzO%2FTrbsSw6%2B6hx6XDzKwA%3D%3D"><iconify-icon
+          icon="bi:linkedin"></iconify-icon>linkedin.com/in/ismael-zian</a>
     </div>
     <div id="github">
-      <a href="github.com/izjob"><iconify-icon icon="bi:github"></iconify-icon>github.com/izjob</a>
+      <a href="https://github.com/izjob"><iconify-icon icon="bi:github"></iconify-icon>github.com/izjob</a>
     </div>
   </div>
+  <script type="module">
+    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+
+    import { getDatabase, ref } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyADmtFOtMf7eDr8RzZ8ES-9iCMf5ywyjao",
+      authDomain: "izcasinoroulette.firebaseapp.com",
+      projectId: "izcasinoroulette",
+      storageBucket: "izcasinoroulette.appspot.com",
+      messagingSenderId: "581691954571",
+      appId: "1:581691954571:web:e73df3eb4f89218a098b8e",
+      databaseURL: "https://izcasinoroulette-default-rtdb.firebaseio.com/"
+    };
+    var app;
+    if (!getApps().length) {
+      app = initializeApp(firebaseConfig);
+    } else {
+      app = getApps()[0];
+    }
+    const db = getDatabase(app);
+
+    console.log("Firebase App:", app);
+    console.log("Database:", db);
+    //console.log("Database Reference:", dbRef);
+
+    
+    const dbRef = ref.on("/");
+
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      console.log("Base de datos modificada:", data);
+    })
+
+  </script>
 </body>
 
 </html>
