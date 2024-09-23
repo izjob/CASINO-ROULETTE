@@ -79,8 +79,9 @@
       <div class="ranking">
         <table id="ranking-rt">
           <thead>
-            <th colspan="2">RANKING<br> (Real-Time)</th>
+            <th colspan="2">RANKING<br> (in the last 3 minutes)</th>
             <tr>
+              
               <th>NAME</th>
               <th>POINTS</th>
             </tr>
@@ -91,7 +92,7 @@
         </table>
         <table id="ranking-at">
           <thead>
-            <th colspan="3">RANKING<br>(All-Time)</th>
+            <th colspan="3">RANKING<br>(All-Time, It updates every 30 minutes)</th>
             <tr>
               <th>NAME</th>
               <th>POINTS</th>
@@ -116,40 +117,6 @@
       <a href="https://github.com/izjob"><iconify-icon icon="bi:github"></iconify-icon>github.com/izjob</a>
     </div>
   </div>
-  <script type="module">
-    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-
-    import { getDatabase, ref } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyADmtFOtMf7eDr8RzZ8ES-9iCMf5ywyjao",
-      authDomain: "izcasinoroulette.firebaseapp.com",
-      projectId: "izcasinoroulette",
-      storageBucket: "izcasinoroulette.appspot.com",
-      messagingSenderId: "581691954571",
-      appId: "1:581691954571:web:e73df3eb4f89218a098b8e",
-      databaseURL: "https://izcasinoroulette-default-rtdb.firebaseio.com/"
-    };
-    var app;
-    if (!getApps().length) {
-      app = initializeApp(firebaseConfig);
-    } else {
-      app = getApps()[0];
-    }
-    const db = getDatabase(app);
-
-    console.log("Firebase App:", app);
-    console.log("Database:", db);
-    //console.log("Database Reference:", dbRef);
-
-    
-    const dbRef = ref.on("/");
-
-    dbRef.on('value', (snapshot) => {
-      const data = snapshot.val();
-      console.log("Base de datos modificada:", data);
-    })
-
-  </script>
 </body>
 
 </html>

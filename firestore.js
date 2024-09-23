@@ -30,6 +30,7 @@ export async function start(user) {
                 displayName: user.displayName,
                 points: 100,
                 createdAt: new Date().toISOString(),
+                maxpoints: 100,
             });
             console.log("Nuevo usuario creado con 100 puntos");
         console.log(await getPoints(user))
@@ -47,10 +48,22 @@ export async function getPoints(user) {
     const userSnapshot = await get(userRef);
     console.log(userRef)
     const datos = userSnapshot.val();
-
-
     if (datos) {
         return datos.points;
+    } else {
+        console.log("No se encontraron datos para el usuario especificado.");
+        //console.log('datos .> '+ datos) // O cualquier valor por defecto que prefieras
+    }
+}
+
+export async function getMaxpoints(user) {
+    //console.log('iddeluser.>'+user.uid)
+    const userRef = ref(db, `users/${user.uid}`);
+    const userSnapshot = await get(userRef);
+    console.log(userRef)
+    const datos = userSnapshot.val();
+    if (datos) {
+        return datos.maxpoints;
     } else {
         console.log("No se encontraron datos para el usuario especificado.");
         //console.log('datos .> '+ datos) // O cualquier valor por defecto que prefieras
@@ -66,7 +79,7 @@ export async function updatePoints(user, newpoints) {
 
 export async function getRankingRT() {
     const usuarios = [];
-    const q = query(ref(db, "users"), orderByChild("points","desc"), limitToFirst(10));
+    const q = query(ref(db, "users"), orderByChild("points"), limitToFirst(3));
     const querySnapshot = await get(q);
     querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
@@ -74,5 +87,24 @@ export async function getRankingRT() {
     usuarios.sort((a, b) => b.points - a.points);
     console.log(usuarios);
     return usuarios;
+}
+
+export async function getRankingAT() {
+    const usuarios = [];
+    const q = query(ref(db, "users"), orderByChild("maxpoints"), limitToFirst(3));
+    const querySnapshot = await get(q);
+    querySnapshot.forEach((snapshot) => {
+        usuarios.push(snapshot.val());
+    });
+    usuarios.sort((a, b) => b.points - a.points);
+    console.log(usuarios);
+    return usuarios;
+}
+
+export async function updateMaxpoints(user,newMax){
+    const userRef = ref(db,'users/'+user.uid);
+    update(userRef,{
+        maxpoints:newMax
+    })
 }
 

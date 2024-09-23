@@ -1,33 +1,47 @@
-//ranking
-
+//----------------------------------------------------------------------------FIRES--------------------------------------------------------------
+import {login, logout} from "./auth.js"
+import {start,getPoints,getMaxpoints,updatePoints,updateMaxpoints,getRankingRT,getRankingAT} from "./firestore.js"
+//----------------------------------------------------------------------------RANKING--------------------------------------------------------------
 var tbodyrt= $('#tbody-rt')
 var tbodyat= $('#tbody-at')
+rankingRTUpdate()
+rankingATUpdate()
 
-    rankingRTUpdate()
+setInterval(() => {
+    //rankingRTUpdate()
+}, 18000);
 
+setInterval(() => {
+    //rankingRTAupdate()
+}, 1000*60*30 );
 
 async function rankingRTUpdate() {
     var ranking= await getRankingRT()
     tbodyrt.empty()
     ranking.forEach(user => {
-    var row=`<tr><td>${user.displayName}</td><td>${user.points}</td></tr>`
-    console.log(row)
+    var username = user.email.split('@')[0]
+    var row=`<tr><td>${username}</td><td>${user.points}</td></tr>`
     tbodyrt.append(row)
 });
 }
 
-//overlay
+async function rankingATUpdate() {
+    var ranking= await getRankingAT()
+    tbodyat.empty()
+    ranking.forEach(user => {
+    var username = user.email.split('@')[0]  
+    var row=`<tr><td>${username}</td><td>${user.maxpoints}</td><td>${user.maxpointsDate}</td></tr>`
+    tbodyat.append(row)
+});
+}
+
+//----------------------------------------------------------------------------LOGIN Y OVERLAY--------------------------------------------------------------
+var overlay = $('#overlay')
 $('#overlay').on("click",() =>{
     alert('To play, you need to log in.')
 })
 
-
-//login
-import {login, logout} from "./auth.js"
-import {start,getPoints,updatePoints,getRankingRT} from "./firestore.js"
-
 var btnlogin = $('#btnlogin')
-var overlay = $('#overlay')
 var btnlogout = $('#btnlogout')
 
 
@@ -35,21 +49,19 @@ var wallet = '???';
 $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 var user
+var maxpoints = 0
 btnlogin.on("click", async (e) => {
     try {     
         var currentUser= await login()
         user = currentUser
         start(user)
-        //console.log('funciona')
-
-
-
-        $('#userdiv').text(user.displayName)
+        maxpoints=getMaxpoints(user)  
+        var username = user.email.split('@')[0]
+        $('#userdiv').text(username)
         btnlogin.hide()
         overlay.hide()
-        console.log(user.uid)
-        console.log(await getPoints(user))
         wallet= await getPoints(user)
+        maxpoints= await getMaxpoints(user)
         $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 
@@ -61,7 +73,6 @@ btnlogin.on("click", async (e) => {
 
 btnlogout.on("click", async (e) => {
     try {
-        //console.log("funciona")
         await logout()
         btnlogin.show()
         overlay.show()
@@ -113,7 +124,7 @@ BtnSpin.on('click',()=>{
         alert("Bet bigger than wallet");
         cLearBets();
     } else {
-
+        
         currentInput = parseInt($(".BetInput").val());
 
         var ResultColor = "";
@@ -158,7 +169,7 @@ BtnSpin.on('click',()=>{
                 }
             }
 
-            $(".Wallet").html("Wallet: " + wallet);
+            $(".Wallet").html("Wallet: " + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>');
             $(".BlackBet, .GreenBet, .RedBet").html("0");
             redBet = greenBet = blackBet = 0;
 
@@ -175,7 +186,9 @@ BtnSpin.on('click',()=>{
 
             $("#NumList").prepend(numeroHistorial)
             updatePoints(user,wallet)
-            
+            if (wallet>maxpoints) {
+                updateMaxpoints(user,wallet)
+            }
         }, 5000)
 
     }

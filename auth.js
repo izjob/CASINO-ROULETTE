@@ -34,7 +34,8 @@ export async function login(){
         return response.user
     } catch (error) {
         console.log(error)
-        throw new Error(error);       
+        throw new Error(error);   
+            
     }
 }
 
