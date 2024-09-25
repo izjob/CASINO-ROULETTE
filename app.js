@@ -12,6 +12,8 @@ setTimeout(() => {
 rankingATUpdate()
 }, 2000);
 */
+var tbodyrt= $('#tbody-rt')
+var tbodyat= $('#tbody-at')
 
 setInterval(() => {
     rankingRTUpdate()
