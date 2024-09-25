@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getDatabase, ref, get, set, update, query, orderByChild, limitToFirst } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { getDatabase, ref, get, set, update, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyADmtFOtMf7eDr8RzZ8ES-9iCMf5ywyjao",
@@ -25,12 +25,16 @@ export async function start(user) {
         const userSnapshot = await get(userRef);
         if (!userSnapshot.exists()) {
             // Si el usuario es nuevo, añadirlo con 100 puntos
+            const date = new Date().toISOString();
+            const formattedDate = date.split('.')[0].replace('T', ' ');
+            const finalDate = `${formattedDate} (UTC+01:00)`;
             await set(userRef, {
                 email: user.email,
                 displayName: user.displayName,
                 points: 100,
                 createdAt: new Date().toISOString(),
                 maxpoints: 100,
+                maxpointsDate:finalDate
             });
             console.log("Nuevo usuario creado con 100 puntos");
         console.log(await getPoints(user))
@@ -77,9 +81,20 @@ export async function updatePoints(user, newpoints) {
     });
 }
 
+export async function getNPlayers() {
+    const usuarios = [];
+    const q = query(ref(db, "users"))
+    const querySnapshot = await get(q);
+    querySnapshot.forEach((snapshot) => {
+        usuarios.push(snapshot.val());
+    });
+    console.log(usuarios.length)
+    return usuarios.length;
+}
+
 export async function getRankingRT() {
     const usuarios = [];
-    const q = query(ref(db, "users"), orderByChild("points"), limitToFirst(3));
+    const q = query(ref(db, "users"), orderByChild("points"), limitToLast(3));
     const querySnapshot = await get(q);
     querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
@@ -91,7 +106,7 @@ export async function getRankingRT() {
 
 export async function getRankingAT() {
     const usuarios = [];
-    const q = query(ref(db, "users"), orderByChild("maxpoints"), limitToFirst(3));
+    const q = query(ref(db, "users"), orderByChild("maxpoints"), limitToLast(3));
     const querySnapshot = await get(q);
     querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
@@ -101,10 +116,17 @@ export async function getRankingAT() {
     return usuarios;
 }
 
+
+
 export async function updateMaxpoints(user,newMax){
+    const date = new Date().toISOString();
+    const formattedDate = date.split('.')[0].replace('T', ' ');
+    const finalDate = `${formattedDate} (UTC+01:00)`;
     const userRef = ref(db,'users/'+user.uid);
     update(userRef,{
-        maxpoints:newMax
+        maxpoints:newMax,
+        maxpointsDate:finalDate
+        
     })
 }
 

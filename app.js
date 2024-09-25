@@ -1,21 +1,29 @@
 //----------------------------------------------------------------------------FIRES--------------------------------------------------------------
 import {login, logout} from "./auth.js"
-import {start,getPoints,getMaxpoints,updatePoints,updateMaxpoints,getRankingRT,getRankingAT} from "./firestore.js"
+import {start,getNPlayers,getPoints,getMaxpoints,updatePoints,updateMaxpoints,getRankingRT,getRankingAT} from "./firestore.js"
 //----------------------------------------------------------------------------RANKING--------------------------------------------------------------
+
+var nplayers=await getNPlayers()
+$('.nplayers').text(nplayers)
 var tbodyrt= $('#tbody-rt')
 var tbodyat= $('#tbody-at')
-rankingRTUpdate()
+setTimeout(() => {
+    rankingRTUpdate()
 rankingATUpdate()
+}, 2000);
+
 
 setInterval(() => {
-    //rankingRTUpdate()
+    rankingRTUpdate()
 }, 18000);
 
 setInterval(() => {
-    //rankingRTAupdate()
-}, 1000*60*30 );
+    rankingRTAupdate()
+}, 18000 );
 
 async function rankingRTUpdate() {
+    var nplayers=await getNPlayers()
+    $('.nplayers').text(nplayers)   
     var ranking= await getRankingRT()
     tbodyrt.empty()
     ranking.forEach(user => {
@@ -26,6 +34,8 @@ async function rankingRTUpdate() {
 }
 
 async function rankingATUpdate() {
+    var nplayers=await getNPlayers()
+    $('.nplayers').text(nplayers)
     var ranking= await getRankingAT()
     tbodyat.empty()
     ranking.forEach(user => {
@@ -50,27 +60,31 @@ $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></ico
 
 var user
 var maxpoints = 0
+//LOGIN QUE EMPIEZA CON DETECTAR EL USUARIO Y SUS DATOS
 btnlogin.on("click", async (e) => {
     try {     
         var currentUser= await login()
         user = currentUser
         start(user)
-        maxpoints=getMaxpoints(user)  
-        var username = user.email.split('@')[0]
-        $('#userdiv').text(username)
-        btnlogin.hide()
-        overlay.hide()
-        wallet= await getPoints(user)
-        maxpoints= await getMaxpoints(user)
-        $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+
+        //QUIERO VER SI ESTO FUNCIONA
+        setTimeout(async () => {
+            maxpoints=getMaxpoints(user)  
+            var username = user.email.split('@')[0]
+            $('#userdiv').text(username)
+            btnlogin.hide()
+            overlay.hide()
+            wallet= await getPoints(user)
+            maxpoints= await getMaxpoints(user)
+            $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')    
+        }, 1000);
 
 
     } catch (error) {
         console.log(error)
     }
 })
-
-
+//EL BOTON DE DESCONECTARSE
 btnlogout.on("click", async (e) => {
     try {
         await logout()
@@ -84,16 +98,8 @@ btnlogout.on("click", async (e) => {
 })
 
 
+//----------------------------------------------------------------------------RULETA--------------------------------------------------------------
 
-
-var currentInput = 0;
-
-var greenBet = 0;
-var redBet = 0;
-var blackBet = 0;
-
-
-//$(".Wallet").html('<span id="vcoins">Wallet: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon></span><button><iconify-icon icon="icon-park-outline:video"></iconify-icon>=+50<iconify-icon icon="ri:coins-line"></iconify-icon></button>');
 var roulette = "<span class='Green'>0</span>";
 
 for (var i = 1; i < 37; i++) {
@@ -105,6 +111,12 @@ for (var i = 1; i < 37; i++) {
     }
 }
 
+roulette = roulette + roulette + roulette + roulette + roulette;
+
+document.getElementById('RollerContainer').innerHTML = roulette;
+
+//----------------------------------------------------------------------------HISTORIAL--------------------------------------------------------------
+
 for (var i = 0; i < 10; i++) {
     var emptyHistorial = $('<span></span>')
     emptyHistorial.addClass('numeroHistorial', '.enter-left')
@@ -114,18 +126,19 @@ for (var i = 0; i < 10; i++) {
     $("#NumList").prepend(emptyHistorial)
 }
 
-roulette = roulette + roulette + roulette + roulette + roulette;
+//--------------------------------------------------------------------------0 APUESTAS Y SPIN-------------------------------------------------------------
 
-document.getElementById('RollerContainer').innerHTML = roulette;
+var greenBet = 0;
+var redBet = 0;
+var blackBet = 0;
 
 var BtnSpin = $('.BtnSpin')
 BtnSpin.on('click',()=>{
     if (greenBet + redBet + blackBet > wallet) {
         alert("Bet bigger than wallet");
-        cLearBets();
     } else {
         
-        currentInput = parseInt($(".BetInput").val());
+        var currentInput = parseInt($(".BetInput").val());
 
         var ResultColor = "";
 
@@ -193,11 +206,17 @@ BtnSpin.on('click',()=>{
 
     }
 })
-
+$("#ClBets").click(function () {
+    cLearBets()
+})
+//ESTO FALTA
 function cLearBets() {
     $(".BlackBet, .GreenBet, .RedBet").html("0");
     redBet = greenBet = blackBet = 0;
 }
+
+
+//----------------------------------------------------------------------------BOTONES APUESTAS--------------------------------------------------------------
 
 $(".BetRed").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
@@ -205,7 +224,6 @@ $(".BetRed").click(function () {
     }
     else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
         alert("Bet bigger than wallet"+wallet);
-        cLearBets();
     }
     else{
         redBet = redBet + parseInt($(".BetInput").val());
@@ -219,7 +237,6 @@ $(".BetGreen").click(function () {
     }
     else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
         alert("Bet bigger than wallet");
-        cLearBets();
     } 
     else {
         greenBet = greenBet + parseInt($(".BetInput").val());
@@ -233,7 +250,6 @@ $(".BetBlack").click(function () {
     } 
     else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
         alert("Bet bigger than wallet");
-        cLearBets();
     }
     else {
         blackBet = blackBet + parseInt($(".BetInput").val());
