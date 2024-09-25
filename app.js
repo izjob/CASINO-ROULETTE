@@ -2,7 +2,7 @@
 import {login, logout} from "./auth.js"
 import {start,getNPlayers,getPoints,getMaxpoints,updatePoints,updateMaxpoints,getRankingRT,getRankingAT} from "./firestore.js"
 //----------------------------------------------------------------------------RANKING--------------------------------------------------------------
-
+/*
 var nplayers=await getNPlayers()
 $('.nplayers').text(nplayers)
 var tbodyrt= $('#tbody-rt')
@@ -11,14 +11,14 @@ setTimeout(() => {
     rankingRTUpdate()
 rankingATUpdate()
 }, 2000);
-
+*/
 
 setInterval(() => {
     rankingRTUpdate()
 }, 18000);
 
 setInterval(() => {
-    rankingRTAupdate()
+    rankingATUpdate()
 }, 18000 );
 
 async function rankingRTUpdate() {
@@ -250,6 +250,7 @@ $(".BetBlack").click(function () {
     } 
     else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
         alert("Bet bigger than wallet");
+
     }
     else {
         blackBet = blackBet + parseInt($(".BetInput").val());
