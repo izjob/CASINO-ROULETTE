@@ -116,10 +116,11 @@ export async function getRankingAT() {
     const q = query(ref(db, "users"), orderByChild("maxpoints"), limitToLast(3));
     const querySnapshot = await get(q);
     querySnapshot.forEach((snapshot) => {
+        console.log('usus1',usuarios)
         usuarios.push(snapshot.val());
     });
     usuarios.sort((a, b) => b.points - a.points);
-    //console.log(usuarios);
+    console.log('usus2',usuarios)
     return usuarios;
 }
 
