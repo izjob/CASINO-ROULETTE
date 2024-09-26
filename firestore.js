@@ -82,14 +82,21 @@ export async function updatePoints(user, newpoints) {
 }
 
 export async function getNPlayers() {
-    const usuarios = [];
-    const q = query(ref(db, "users"))
-    const querySnapshot = await get(q);
-    querySnapshot.forEach((snapshot) => {
-        usuarios.push(snapshot.val());
-    });
-    //console.log(usuarios.length)
-    return usuarios.length;
+
+    try {
+        const usuarios = [];
+        const q = query(ref(db, "users"), orderByChild("points"));
+        const querySnapshot = await get(q);
+        querySnapshot.forEach((snapshot) => {
+            usuarios.push(snapshot.val());
+        });
+        //console.log(usuarios.length)
+        return usuarios.length;
+    } catch (error) {
+        console.log('Error con la Realtime Database');
+        throw new Error(error);
+    }
+
 }
 
 export async function getRankingRT() {
