@@ -36,8 +36,8 @@ export async function start(user) {
                 maxpoints: 100,
                 maxpointsDate:finalDate
             });
-            console.log("Nuevo usuario creado con 100 puntos");
-        console.log(await getPoints(user))
+            //console.log("Nuevo usuario creado con 100 puntos");
+        //console.log(await getPoints(user))
 
         }
     } catch (error) {
@@ -50,7 +50,7 @@ export async function getPoints(user) {
     //console.log('iddeluser.>'+user.uid)
     const userRef = ref(db, `users/${user.uid}`);
     const userSnapshot = await get(userRef);
-    console.log(userRef)
+    //console.log(userRef)
     const datos = userSnapshot.val();
     if (datos) {
         return datos.points;
@@ -64,7 +64,7 @@ export async function getMaxpoints(user) {
     //console.log('iddeluser.>'+user.uid)
     const userRef = ref(db, `users/${user.uid}`);
     const userSnapshot = await get(userRef);
-    console.log(userRef)
+    //console.log(userRef)
     const datos = userSnapshot.val();
     if (datos) {
         return datos.maxpoints;
@@ -88,7 +88,7 @@ export async function getNPlayers() {
     querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
     });
-    console.log(usuarios.length)
+    //console.log(usuarios.length)
     return usuarios.length;
 }
 
@@ -100,7 +100,7 @@ export async function getRankingRT() {
         usuarios.push(snapshot.val());
     });
     usuarios.sort((a, b) => b.points - a.points);
-    console.log(usuarios);
+    //console.log(usuarios);
     return usuarios;
 }
 
@@ -112,7 +112,7 @@ export async function getRankingAT() {
         usuarios.push(snapshot.val());
     });
     usuarios.sort((a, b) => b.points - a.points);
-    console.log(usuarios);
+    //console.log(usuarios);
     return usuarios;
 }
 

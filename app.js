@@ -74,8 +74,10 @@ btnlogin.on("click", async (e) => {
             overlay.hide()
             wallet= await getPoints(user)
             maxpoints= await getMaxpoints(user)
-            $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')    
-        }, 1000);
+            $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>') 
+            rankingATUpdate()
+            rankingRTUpdate()   
+        }, 2000);
 
 
     } catch (error) {
