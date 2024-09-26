@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getDatabase, ref, get, set, update, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { getDatabase, ref, get, set, update, query, orderByChild, limitToFirst } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyADmtFOtMf7eDr8RzZ8ES-9iCMf5ywyjao",
@@ -85,7 +85,7 @@ export async function getNPlayers() {
 
     try {
         const usuarios = [];
-        const q = query(ref(db, "users"), orderByChild("points"),limitToLast(100));
+        const q = query(ref(db, "users"), orderByChild("points"),limitToFirst(100));
         const querySnapshot = await get(q);
         querySnapshot.forEach((snapshot) => {
             usuarios.push(snapshot.val());
@@ -101,27 +101,24 @@ export async function getNPlayers() {
 
 export async function getRankingRT() {
     const usuarios = [];
-    const q = query(ref(db, "users"), orderByChild("points"), limitToLast(3));
+    const q = query(ref(db, "users"),orderByChild("points"));
     const querySnapshot = await get(q);
     querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
     });
     usuarios.sort((a, b) => b.points - a.points);
-    //console.log(usuarios);
-    return usuarios;
+    return usuarios.slice(0,3);
 }
 
 export async function getRankingAT() {
     const usuarios = [];
-    const q = query(ref(db, "users"), orderByChild("maxpoints"), limitToLast(3));
+    const q = query(ref(db, "users"),orderByChild("maxpoints"));
     const querySnapshot = await get(q);
-    querySnapshot.forEach((snapshot) => {
-        console.log('usus1',usuarios)
+    querySnapshot.forEach((snapshot) => {   
         usuarios.push(snapshot.val());
     });
-    usuarios.sort((a, b) => b.points - a.points);
-    console.log('usus2',usuarios)
-    return usuarios;
+    usuarios.sort((a, b) => b.maxpoints - a.maxpoints);
+    return usuarios.slice(0,3);
 }
 
 

@@ -13,11 +13,11 @@ var tbodyat= $('#tbody-at')
 
 setInterval(() => {
     rankingRTUpdate()
-}, 18000);
+}, 1000*60);
 
 setInterval(() => {
     rankingATUpdate()
-}, 18000 );
+}, 1000*60);
 
 async function rankingRTUpdate() {
     var nplayers=await getNPlayers()
@@ -54,7 +54,7 @@ var btnlogout = $('#btnlogout')
 
 
 var wallet = '???';
-$(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+$(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 var user
 var maxpoints = 0
@@ -74,7 +74,7 @@ btnlogin.on("click", async (e) => {
             overlay.hide()
             wallet= await getPoints(user)
             maxpoints= await getMaxpoints(user)
-            $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>') 
+            $(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>') 
             rankingATUpdate()
             rankingRTUpdate()   
         }, 2000);
@@ -91,7 +91,7 @@ btnlogout.on("click", async (e) => {
         btnlogin.show()
         overlay.show()
         wallet='???'
-        $(".Wallet").html('Wallet: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+        $(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
     } catch (error) {
         
     }
@@ -178,11 +178,11 @@ BtnSpin.on('click',()=>{
 
                 if (wallet < 50) {
                     wallet=50
-                    $(".Wallet").html("Wallet: " + wallet);
+                    $(".Wallet").html("WALLET: " + wallet);
                 }
             }
 
-            $(".Wallet").html("Wallet: " + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>');
+            $(".Wallet").html("WALLET: " + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>');
             $(".BlackBet, .GreenBet, .RedBet").html("0");
             redBet = greenBet = blackBet = 0;
 
