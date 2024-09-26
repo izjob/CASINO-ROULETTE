@@ -85,7 +85,7 @@ export async function getNPlayers() {
 
     try {
         const usuarios = [];
-        const q = query(ref(db, "users"), orderByChild("points"));
+        const q = query(ref(db, "users"), orderByChild("points"),limitToLast(100));
         const querySnapshot = await get(q);
         querySnapshot.forEach((snapshot) => {
             usuarios.push(snapshot.val());
