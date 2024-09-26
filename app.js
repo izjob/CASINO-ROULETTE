@@ -7,10 +7,6 @@ var nplayers=await getNPlayers()
 $('.nplayers').text(nplayers)
 var tbodyrt= $('#tbody-rt')
 var tbodyat= $('#tbody-at')
-setTimeout(() => {
-    rankingRTUpdate()
-rankingATUpdate()
-}, 2000);
 */
 var tbodyrt= $('#tbody-rt')
 var tbodyat= $('#tbody-at')
@@ -25,7 +21,7 @@ setInterval(() => {
 
 async function rankingRTUpdate() {
     var nplayers=await getNPlayers()
-    //$('.nplayers').text(nplayers)   
+    $('.nplayers').text(nplayers)   
     var ranking= await getRankingRT()
     tbodyrt.empty()
     ranking.forEach(user => {
@@ -37,7 +33,7 @@ async function rankingRTUpdate() {
 
 async function rankingATUpdate() {
     var nplayers=await getNPlayers()
-    //$('.nplayers').text(nplayers)
+    $('.nplayers').text(nplayers)
     var ranking= await getRankingAT()
     tbodyat.empty()
     ranking.forEach(user => {
