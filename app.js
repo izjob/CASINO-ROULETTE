@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------FIRES--------------------------------------------------------------
-import {login, logout} from "./auth.js"
-import {start,getNPlayers,getPoints,getMaxpoints,updatePoints,updateMaxpoints,getRankingRT,getRankingAT} from "./firestore.js"
+import { login, logout } from "./auth.js"
+import { start, getNPlayers, getPoints, getMaxpoints, updatePoints, updateMaxpoints, getRankingRT, getRankingAT } from "./firestore.js"
 //----------------------------------------------------------------------------RANKING--------------------------------------------------------------
 /*
 var nplayers=await getNPlayers()
@@ -8,44 +8,70 @@ $('.nplayers').text(nplayers)
 var tbodyrt= $('#tbody-rt')
 var tbodyat= $('#tbody-at')
 */
-var tbodyrt= $('#tbody-rt')
-var tbodyat= $('#tbody-at')
+var casino_music = document.getElementById('casino-music');
+var coin_music = document.getElementById('coin-music');
+var spin_music = document.getElementById('spin-music');
+var win_music = document.getElementById('win-music');
+var lose_music = document.getElementById('lose-music');
+
+$('body').on("click", () => {
+    playSoundWithSettings(casino_music, 0.5, 1000*60*60*24);
+})
+
+function playSoundWithSettings(audioElement, volume, duration) {
+    audioElement.volume = volume;
+
+    // Comenzar a reproducir el sonido
+    audioElement.play().then(() => {
+        // Después del tiempo especificado, pausar el audio
+        setTimeout(function () {
+            audioElement.pause();
+            // Reiniciar el tiempo de reproducción a 0 (opcional, si quieres que comience desde el inicio la próxima vez)
+            audioElement.currentTime = 0;
+        }, duration); // Duración en milisegundos
+    }).catch(function (error) {
+        console.error("Error al reproducir el sonido:", error);
+    });
+}
+
+var tbodyrt = $('#tbody-rt')
+var tbodyat = $('#tbody-at')
 
 setInterval(() => {
     rankingRTUpdate()
-}, 1000*60);
+}, 1000 * 60);
 
 setInterval(() => {
     rankingATUpdate()
-}, 1000*60);
+}, 1000 * 60);
 
 async function rankingRTUpdate() {
-    var nplayers=await getNPlayers()
-    $('.nplayers').text(nplayers)   
-    var ranking= await getRankingRT()
+    var nplayers = await getNPlayers()
+    $('.nplayers').text(nplayers)
+    var ranking = await getRankingRT()
     tbodyrt.empty()
     ranking.forEach(user => {
-    var username = user.email.split('@')[0]
-    var row=`<tr><td>${username}</td><td>${user.points}</td></tr>`
-    tbodyrt.append(row)
-});
+        var username = user.email.split('@')[0]
+        var row = `<tr><td>${username}</td><td>${user.points}</td></tr>`
+        tbodyrt.append(row)
+    });
 }
 
 async function rankingATUpdate() {
-    var nplayers=await getNPlayers()
+    var nplayers = await getNPlayers()
     $('.nplayers').text(nplayers)
-    var ranking= await getRankingAT()
+    var ranking = await getRankingAT()
     tbodyat.empty()
     ranking.forEach(user => {
-    var username = user.email.split('@')[0]  
-    var row=`<tr><td>${username}</td><td>${user.maxpoints}</td><td>${user.maxpointsDate}</td></tr>`
-    tbodyat.append(row)
-});
+        var username = user.email.split('@')[0]
+        var row = `<tr><td>${username}</td><td>${user.maxpoints}</td><td>${user.maxpointsDate}</td></tr>`
+        tbodyat.append(row)
+    });
 }
 
 //----------------------------------------------------------------------------LOGIN Y OVERLAY--------------------------------------------------------------
 var overlay = $('#overlay')
-$('#overlay').on("click",() =>{
+$('#overlay').on("click", () => {
     alert('To play, you need to log in.')
 })
 
@@ -54,31 +80,31 @@ var btnlogout = $('#btnlogout')
 
 
 var wallet = '???';
-$(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+$(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 var user
 var maxpoints = 0
 //LOGIN QUE EMPIEZA CON DETECTAR EL USUARIO Y SUS DATOS
 btnlogin.on("click", async (e) => {
-    try {     
-        var currentUser= await login()
+    try {
+        var currentUser = await login()
         user = currentUser
         start(user)
 
         $('#loader').show()
         //QUIERO VER SI ESTO FUNCIONA
         setTimeout(async () => {
-            maxpoints=getMaxpoints(user)  
+            maxpoints = getMaxpoints(user)
             var username = user.email.split('@')[0]
             $('#userdiv').text(username)
             btnlogin.hide()
             overlay.hide()
-            wallet= await getPoints(user)
-            maxpoints= await getMaxpoints(user)
-            $(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>') 
+            wallet = await getPoints(user)
+            maxpoints = await getMaxpoints(user)
+            $(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
             rankingATUpdate()
             rankingRTUpdate()
-            $('#loader').hide()  
+            $('#loader').hide()
         }, 3000);
 
 
@@ -92,10 +118,10 @@ btnlogout.on("click", async (e) => {
         await logout()
         btnlogin.show()
         overlay.show()
-        wallet='???'
-        $(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>')
+        wallet = '???'
+        $(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
     } catch (error) {
-        
+
     }
 })
 
@@ -135,11 +161,13 @@ var redBet = 0;
 var blackBet = 0;
 
 var BtnSpin = $('.BtnSpin')
-BtnSpin.on('click',()=>{
+BtnSpin.on('click', () => {
     if (greenBet + redBet + blackBet > wallet) {
         alert("Bet bigger than wallet");
     } else {
-        
+
+        spin_music.play()
+        playSoundWithSettings(spin_music, 1, 5000 )
         var currentInput = parseInt($(".BetInput").val());
 
         var ResultColor = "";
@@ -171,18 +199,22 @@ BtnSpin.on('click',()=>{
 
             if (greenBet > 0 && ResultColor == "Limegreen") {
                 wallet = wallet + greenBet * 35 - redBet - blackBet;
+                playSoundWithSettings(win_music,1,4000)
                 winConfetty()
             } else if (redBet > 0 && ResultColor == "Red") {
                 wallet = wallet + redBet - greenBet - blackBet;
+                playSoundWithSettings(win_music,1,4000)
                 winConfetty()
             } else if (blackBet > 0 && ResultColor == "Black") {
                 wallet = wallet + blackBet - redBet - greenBet;
+                playSoundWithSettings(win_music,1,4000)
                 winConfetty()
             } else if (blackBet > 0 || redBet > 0 || greenBet > 0) {
+                playSoundWithSettings(lose_music,1,3000)
                 wallet = wallet - redBet - greenBet - blackBet;
 
                 if (wallet < 50) {
-                    wallet=50
+                    wallet = 50
                     $(".Wallet").html("WALLET: " + wallet);
                 }
             }
@@ -203,9 +235,9 @@ BtnSpin.on('click',()=>{
             })
 
             $("#NumList").prepend(numeroHistorial)
-            updatePoints(user,wallet)
-            if (wallet>maxpoints) {
-                updateMaxpoints(user,wallet)
+            updatePoints(user, wallet)
+            if (wallet > maxpoints) {
+                updateMaxpoints(user, wallet)
             }
 
 
@@ -214,7 +246,7 @@ BtnSpin.on('click',()=>{
 
 
         function winConfetty() {
-            for (let posi = 0.3; posi <= 1.2; posi=posi+0.3) {
+            for (let posi = 0.3; posi <= 1.2; posi = posi + 0.3) {
                 confetti({
                     particleCount: 200,
                     spread: 200,
@@ -243,10 +275,11 @@ $(".BetRed").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
     }
-    else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
-        alert("Bet bigger than wallet"+wallet);
+    else if (greenBet + redBet + blackBet + parseInt($(".BetInput").val()) > wallet) {
+        alert("Bet bigger than wallet" + wallet);
     }
-    else{
+    else {
+        playSoundWithSettings(coin_music,1,1000)
         redBet = redBet + parseInt($(".BetInput").val());
         $(".RedBet").html(redBet);
     }
@@ -256,10 +289,11 @@ $(".BetGreen").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
     }
-    else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
+    else if (greenBet + redBet + blackBet + parseInt($(".BetInput").val()) > wallet) {
         alert("Bet bigger than wallet");
-    } 
+    }
     else {
+        playSoundWithSettings(coin_music,1,1000)
         greenBet = greenBet + parseInt($(".BetInput").val());
         $(".GreenBet").html(greenBet);
     }
@@ -268,12 +302,13 @@ $(".BetGreen").click(function () {
 $(".BetBlack").click(function () {
     if ($(".BetInput").val().match(/[a-z]/i) || $(".BetInput").val() == "") {
         alert("Please enter a bet and only enter numbers");
-    } 
-    else if (greenBet +redBet + blackBet+ parseInt($(".BetInput").val())> wallet) {
+    }
+    else if (greenBet + redBet + blackBet + parseInt($(".BetInput").val()) > wallet) {
         alert("Bet bigger than wallet");
 
     }
     else {
+        playSoundWithSettings(coin_music,1,1000)
         blackBet = blackBet + parseInt($(".BetInput").val());
         $(".BlackBet").html(blackBet);
     }
