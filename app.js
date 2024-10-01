@@ -65,6 +65,7 @@ btnlogin.on("click", async (e) => {
         user = currentUser
         start(user)
 
+        $('#loader').show()
         //QUIERO VER SI ESTO FUNCIONA
         setTimeout(async () => {
             maxpoints=getMaxpoints(user)  
@@ -76,8 +77,9 @@ btnlogin.on("click", async (e) => {
             maxpoints= await getMaxpoints(user)
             $(".Wallet").html('WALLET: ' + wallet +'<iconify-icon icon="ri:coins-line"></iconify-icon>') 
             rankingATUpdate()
-            rankingRTUpdate()   
-        }, 2000);
+            rankingRTUpdate()
+            $('#loader').hide()  
+        }, 3000);
 
 
     } catch (error) {
@@ -169,10 +171,13 @@ BtnSpin.on('click',()=>{
 
             if (greenBet > 0 && ResultColor == "Limegreen") {
                 wallet = wallet + greenBet * 35 - redBet - blackBet;
+                winConfetty()
             } else if (redBet > 0 && ResultColor == "Red") {
                 wallet = wallet + redBet - greenBet - blackBet;
+                winConfetty()
             } else if (blackBet > 0 && ResultColor == "Black") {
                 wallet = wallet + blackBet - redBet - greenBet;
+                winConfetty()
             } else if (blackBet > 0 || redBet > 0 || greenBet > 0) {
                 wallet = wallet - redBet - greenBet - blackBet;
 
@@ -202,8 +207,24 @@ BtnSpin.on('click',()=>{
             if (wallet>maxpoints) {
                 updateMaxpoints(user,wallet)
             }
+
+
         }, 5000)
 
+
+
+        function winConfetty() {
+            for (let posi = 0.3; posi <= 1.2; posi=posi+0.3) {
+                confetti({
+                    particleCount: 200,
+                    spread: 200,
+                    origin: { y: posi }, // El confeti sube desde la parte inferior de la pantalla
+                    startVelocity: 60, // Velocidad inicial
+                    gravity: 0.5,
+                    colors: ['#00ff00', '#ff0000', '#000000']
+                });
+            }
+        }
     }
 })
 $("#ClBets").click(function () {

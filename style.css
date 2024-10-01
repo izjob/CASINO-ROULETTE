@@ -25,7 +25,40 @@ body {
     width: 100%;
     background-color: rgba(128, 128, 128, 0.5);
     z-index: 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+
+#loader {
+    display: none;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+        red 0% 33.33%,
+        lime 33.33% 66.66%,
+        black 66.66% 100%
+        );
+    border: 10px solid gold;
+    animation: loaderSpin 2s linear infinite;
+
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    color: gold;
+    
+}
+
+@keyframes loaderSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .header {
     grid-area: header;
     background-color: grey;
