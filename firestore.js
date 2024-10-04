@@ -27,7 +27,7 @@ export async function start(user) {
             // Si el usuario es nuevo, añadirlo con 100 puntos
             const date = new Date().toISOString();
             const formattedDate = date.split('.')[0].replace('T', ' ');
-            const finalDate = `${formattedDate} (UTC+01:00)`;
+            const finalDate = `${formattedDate} (UTC-01:00)`;
             await set(userRef, {
                 email: user.email,
                 displayName: user.displayName,
@@ -126,7 +126,7 @@ export async function getRankingAT() {
 export async function updateMaxpoints(user,newMax){
     const date = new Date().toISOString();
     const formattedDate = date.split('.')[0].replace('T', ' ');
-    const finalDate = `${formattedDate} (UTC+01:00)`;
+    const finalDate = `${formattedDate} (UTC-01:00)`;
     const userRef = ref(db,'users/'+user.uid);
     update(userRef,{
         maxpoints:newMax,
