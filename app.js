@@ -193,6 +193,10 @@ BtnSpin.on('click', () => {
         }, 100);
 
         $(".Bet, .BtnSpin").css("pointer-events", "none");
+        
+        setTimeout(() => {
+            overlay.show()
+        }, 4500);
 
         setTimeout(function () {
             $(".Bet, .Btnspin").css("pointer-events", "auto");
@@ -239,7 +243,7 @@ BtnSpin.on('click', () => {
             if (wallet > maxpoints) {
                 updateMaxpoints(user, wallet)
             }
-
+            overlay.hide()
 
         }, 5000)
 
