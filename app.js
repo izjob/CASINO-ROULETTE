@@ -196,7 +196,7 @@ BtnSpin.on('click', () => {
         
         setTimeout(() => {
             overlay.show()
-        }, 4500);
+        }, 4600);
 
         setTimeout(function () {
             $(".Bet, .Btnspin").css("pointer-events", "auto");
