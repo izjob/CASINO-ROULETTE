@@ -8,6 +8,66 @@ $('.nplayers').text(nplayers)
 var tbodyrt= $('#tbody-rt')
 var tbodyat= $('#tbody-at')
 */
+var MenuButton = $('.menuButton')
+var MenuCheck = $('.menuCheck')
+
+MenuButton.prop('checked',false)
+console.log(MenuButton.prop('checked'))
+
+$('.menuDiv').hide()
+
+
+MenuButton.on("click", function(event) {
+    event.stopPropagation(); // Detener la propagación del evento
+    if (MenuCheck.prop('checked')) {
+        $('.menuDiv').slideDown(500);
+        MenuCheck.prop('checked', false)// Mostrar el menú si está seleccionado
+
+
+    } else {
+        $('.menuDiv').slideUp(500);
+        MenuCheck.prop('checked',true)// Ocultar el menú si no está seleccionado
+
+    
+    }
+});
+var noloss = false;
+var btnNoloss= $('.btnNoloss')
+
+btnNoloss.on("click", () => {
+    if (wallet<100) {
+        alert(`you don't have 300`)
+    }
+    else{
+        noloss = true
+        btnNoloss.css("pointer-events", "none");
+        wallet=wallet-100
+        if (wallet < 50) {
+            wallet = 50
+        }
+        updatePoints(user, wallet)
+        $(".Wallet").html("WALLET: " + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>');
+    }
+})
+
+var noblock = false;
+var btnNoblock= $('.btnNoblock')
+
+btnNoblock.on("click", () => {
+    if (wallet<400) {
+        alert(`you don't have 400`)
+    }
+    else{
+        noblock = true
+        btnNoblock.css("pointer-events", "none");
+        wallet=wallet-400
+        if (wallet < 50) {
+            wallet = 50
+        }
+        updatePoints(user, wallet)
+        $(".Wallet").html("WALLET: " + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>');
+    }
+})
 var casino_music = document.getElementById('casino-music');
 var coin_music = document.getElementById('coin-music');
 var spin_music = document.getElementById('spin-music');
@@ -116,8 +176,11 @@ btnlogin.on("click", async (e) => {
 btnlogout.on("click", async (e) => {
     try {
         await logout()
-        btnlogin.show()
+        btnlogin.show()       
         overlay.show()
+        $('#loader').hide()
+        $('.menuDiv').hide()
+        MenuCheck.prop('checked', true)
         wallet = '???'
         $(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
     } catch (error) {
@@ -192,11 +255,13 @@ BtnSpin.on('click', () => {
             $("#RollerContainer").css({ "transition": "transform 5s ease", "transform": "translate(" + SpinPro + "%, 0%)" });
         }, 100);
 
-        $(".Bet, .BtnSpin").css("pointer-events", "none");
+        $(".BtnSpin").css("pointer-events", "none");
+
+        if (noblock==false) {
+            $(".Bet").css("pointer-events", "none");
+        }
         
-        setTimeout(() => {
-            overlay.show()
-        }, 4600);
+
 
         setTimeout(function () {
             $(".Bet, .Btnspin").css("pointer-events", "auto");
@@ -213,13 +278,12 @@ BtnSpin.on('click', () => {
                 wallet = wallet + blackBet - redBet - greenBet;
                 playSoundWithSettings(win_music,1,4000)
                 winConfetty()
-            } else if (blackBet > 0 || redBet > 0 || greenBet > 0) {
+            } else if ((blackBet > 0 || redBet > 0 || greenBet > 0) && noloss==false) {
                 playSoundWithSettings(lose_music,1,3000)
                 wallet = wallet - redBet - greenBet - blackBet;
 
                 if (wallet < 50) {
                     wallet = 50
-                    $(".Wallet").html("WALLET: " + wallet);
                 }
             }
 
@@ -243,8 +307,10 @@ BtnSpin.on('click', () => {
             if (wallet > maxpoints) {
                 updateMaxpoints(user, wallet)
             }
-            overlay.hide()
-
+            
+            noloss=false
+            noblock=false
+            $(".btnNoloss, .btnNoblock").css("pointer-events", "auto");
         }, 5000)
 
 
@@ -317,6 +383,3 @@ $(".BetBlack").click(function () {
         $(".BlackBet").html(blackBet);
     }
 });
-
-
-
