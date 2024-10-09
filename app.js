@@ -18,7 +18,7 @@ MenuButton.prop('checked',false)
 
 
 var wallet = '???';
-//$('.menuDiv').hide()
+$('.menuDiv').hide()
 $(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 MenuButton.on("click", function(event) {
