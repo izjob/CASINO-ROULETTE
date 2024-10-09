@@ -1,7 +1,10 @@
 //----------------------------------------------------------------------------FIRES--------------------------------------------------------------
 import { login, logout } from "./auth.js"
-import { start, getNPlayers, getPoints, getMaxpoints, updatePoints, updateMaxpoints, getRankingRT, getRankingAT } from "./firestore.js"
+import { getDateLastDay, getConsecutiveDays, start, getNPlayers, getPoints, getMaxpoints, updatePoints, updateMaxpoints, getRankingRT, getRankingAT } from "./firestore.js"
 //----------------------------------------------------------------------------RANKING--------------------------------------------------------------
+
+//prueba()
+
 /*
 var nplayers=await getNPlayers()
 $('.nplayers').text(nplayers)
@@ -12,10 +15,11 @@ var MenuButton = $('.menuButton')
 var MenuCheck = $('.menuCheck')
 
 MenuButton.prop('checked',false)
-console.log(MenuButton.prop('checked'))
 
-$('.menuDiv').hide()
 
+var wallet = '???';
+//$('.menuDiv').hide()
+$(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
 
 MenuButton.on("click", function(event) {
     event.stopPropagation(); // Detener la propagación del evento
@@ -129,7 +133,7 @@ async function rankingATUpdate() {
     });
 }
 
-//----------------------------------------------------------------------------LOGIN Y OVERLAY--------------------------------------------------------------
+//--------------------------------------------------------------------LOGIN, OVERLAY Y DIARIA--------------------------------------------------------------
 var overlay = $('#overlay')
 $('#overlay').on("click", () => {
     alert('To play, you need to log in.')
@@ -138,9 +142,31 @@ $('#overlay').on("click", () => {
 var btnlogin = $('#btnlogin')
 var btnlogout = $('#btnlogout')
 
+var consecutiveDays
+var today = new Date()
+var lastDay = getDateLastDay()
+var btnDailyreward=$('.btnDailyReward')
+btnDailyreward.hide()
+btnDailyreward.on('click',async ()=>{
+    var sonConsecutivos=sonDiasConsecutivos(today, lastDay)
+    if (sonConsecutivos) {
 
-var wallet = '???';
-$(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
+        if (consecutiveDays==1) {
+            wallet=wallet+100
+        }else if (consecutiveDays==2) {
+            wallet=wallet+200
+        }else if (consecutiveDays>=3) {
+            wallet=wallet+400
+        }
+
+        $(".Wallet").html('WALLET: ' + wallet + '<iconify-icon icon="ri:coins-line"></iconify-icon>')
+        updatePoints(user,wallet)
+    }
+
+})
+
+
+
 
 var user
 var maxpoints = 0
@@ -154,7 +180,8 @@ btnlogin.on("click", async (e) => {
         $('#loader').show()
         //QUIERO VER SI ESTO FUNCIONA
         setTimeout(async () => {
-            maxpoints = getMaxpoints(user)
+            consecutiveDays= await getConsecutiveDays(user)
+            console.log(consecutiveDays)
             var username = user.email.split('@')[0]
             $('#userdiv').text(username)
             btnlogin.hide()
@@ -383,3 +410,36 @@ $(".BetBlack").click(function () {
         $(".BlackBet").html(blackBet);
     }
 });
+
+
+
+
+/*-------------------------------------------------------------------------DIAS CONSECUTIVOS... SI O NO--------------------------------------*/
+
+function sonDiasConsecutivos(date1, date2) {
+    // Obtener el año, mes y día de ambas fechas
+    const año1 = date1.getFullYear();
+    const mes1 = date1.getMonth();
+    const dia1 = date1.getDate();
+
+    const año2 = date2.getFullYear();
+    const mes2 = date2.getMonth();
+    const dia2 = date2.getDate();
+
+    // Verificar si son del mismo año y mes
+    if (año1 === año2 && mes1 === mes2) {
+        return dia2 === dia1 + 1; // Mismo mes, solo verificar el día
+    }
+
+    // Verificar el caso del cambio de mes
+    if (año1 === año2 && mes2 === mes1 + 1 && dia1 === 31) {
+        return dia2 === 1; // Del 31 al 1 del siguiente mes
+    }
+
+    // Verificar el caso del cambio de año
+    if (año2 === año1 + 1 && mes1 === 11 && dia1 === 31) {
+        return dia2 === 1 && mes2 === 0; // Del 31 de diciembre al 1 de enero
+    }
+
+    return false; // No son días consecutivos
+}

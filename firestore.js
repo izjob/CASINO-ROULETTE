@@ -9,7 +9,7 @@ const firebaseConfig = {
     messagingSenderId: "581691954571",
     appId: "1:581691954571:web:e73df3eb4f89218a098b8e",
     databaseURL: "https://izcasinoroulette-default-rtdb.firebaseio.com/"
-    };
+};
 
 let app;
 if (!getApps().length) {
@@ -18,6 +18,76 @@ if (!getApps().length) {
     app = getApps()[0];
 }
 const db = getDatabase(app);
+
+
+/*
+export async function prueba() {
+    const usersRef = ref(db, 'users')
+    const usersSnapshot = await get(usersRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            const users = snapshot.val()
+
+            Object.keys(users).forEach ((userId)=>{
+                const userRef = ref(db, `users/${userId}`);
+
+                const nuevosAtributos ={
+                    dateLastDay: new Date(),
+                    consecutiveDays: 0
+                }
+
+                update(userRef, nuevosAtributos).then(()=> {
+                    console.log('ha funcionao')
+                }).catch((error)=>{
+                    console.log('ha fallao bro: ',error)
+                })
+            })
+        } else{
+            console.log('no hay users')
+        }
+    }).catch((error)=>{
+        console.log('no pille los usuarios: ',error)
+    })
+
+}
+*/
+
+export async function getDateLastDay(user) {
+    //console.log('iddeluser.>'+user.uid)
+    const userRef = ref(db, `users/${user.uid}`);
+    const userSnapshot = await get(userRef);
+    //console.log(userRef)
+    const datos = userSnapshot.val();
+    if (datos) {
+        return datos.dateLastDay;
+    } else {
+        console.log("No se encontraron datos para el usuario especificado.");
+        //console.log('datos .> '+ datos) // O cualquier valor por defecto que prefieras
+    }
+}
+
+export async function getConsecutiveDays(user) {
+    //console.log('iddeluser.>'+user.uid)
+    const userRef = ref(db, `users/${user.uid}`);
+    const userSnapshot = await get(userRef);
+    //console.log(userRef)
+    const datos = userSnapshot.val();
+    if (datos) {
+        return datos.consecutiveDays;
+    } else {
+        console.log("No se encontraron datos para el usuario especificado.");
+        //console.log('datos .> '+ datos) // O cualquier valor por defecto que prefieras
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 export async function start(user) {
     try {
@@ -34,10 +104,10 @@ export async function start(user) {
                 points: 100,
                 createdAt: new Date().toISOString(),
                 maxpoints: 100,
-                maxpointsDate:finalDate
+                maxpointsDate: finalDate
             });
             //console.log("Nuevo usuario creado con 100 puntos");
-        //console.log(await getPoints(user))
+            //console.log(await getPoints(user))
 
         }
     } catch (error) {
@@ -85,7 +155,7 @@ export async function getNPlayers() {
 
     try {
         const usuarios = [];
-        const q = query(ref(db, "users"), orderByChild("points"),limitToFirst(100));
+        const q = query(ref(db, "users"), orderByChild("points"), limitToFirst(100));
         const querySnapshot = await get(q);
         querySnapshot.forEach((snapshot) => {
             usuarios.push(snapshot.val());
@@ -101,37 +171,37 @@ export async function getNPlayers() {
 
 export async function getRankingRT() {
     const usuarios = [];
-    const q = query(ref(db, "users"),orderByChild("points"));
+    const q = query(ref(db, "users"), orderByChild("points"));
     const querySnapshot = await get(q);
     querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
     });
     usuarios.sort((a, b) => b.points - a.points);
-    return usuarios.slice(0,3);
+    return usuarios.slice(0, 3);
 }
 
 export async function getRankingAT() {
     const usuarios = [];
-    const q = query(ref(db, "users"),orderByChild("maxpoints"));
+    const q = query(ref(db, "users"), orderByChild("maxpoints"));
     const querySnapshot = await get(q);
-    querySnapshot.forEach((snapshot) => {   
+    querySnapshot.forEach((snapshot) => {
         usuarios.push(snapshot.val());
     });
     usuarios.sort((a, b) => b.maxpoints - a.maxpoints);
-    return usuarios.slice(0,3);
+    return usuarios.slice(0, 3);
 }
 
 
 
-export async function updateMaxpoints(user,newMax){
+export async function updateMaxpoints(user, newMax) {
     const date = new Date().toISOString();
     const formattedDate = date.split('.')[0].replace('T', ' ');
     const finalDate = `${formattedDate} (UTC-01:00)`;
-    const userRef = ref(db,'users/'+user.uid);
-    update(userRef,{
-        maxpoints:newMax,
-        maxpointsDate:finalDate
-        
+    const userRef = ref(db, 'users/' + user.uid);
+    update(userRef, {
+        maxpoints: newMax,
+        maxpointsDate: finalDate
+
     })
 }
 

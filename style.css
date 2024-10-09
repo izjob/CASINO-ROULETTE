@@ -219,6 +219,13 @@ body {
     min-width: 50%; /* Para garantizar que los divs no se vuelvan demasiado pequeños */
 }
 
+.menuDiv .btnDailyreward{
+    background-color: yellow;
+    color: black;
+    font-size: xx-large;
+    padding: 10px;
+}
+
 .menuDiv button:last-child{
     background-color: red;
 }
